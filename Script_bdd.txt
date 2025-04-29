@@ -1,0 +1,107 @@
+NOM BDD : booking (c pas dans le script ca)
+----------------------------------------------------------------------------------------
+
+Script bdd corrigé 👍
+
+CREATE TABLE Utilisateur (
+   idUser INT AUTO_INCREMENT,
+   nom VARCHAR(50) NOT NULL,
+   email VARCHAR(50) NOT NULL,
+   password VARCHAR(50) NOT NULL,
+   isAdmin BOOLEAN NOT NULL,
+   PRIMARY KEY (idUser),
+   UNIQUE (email)
+);
+
+CREATE TABLE Ville (
+   idVille INT AUTO_INCREMENT,
+   nom VARCHAR(50) NOT NULL,
+   codePostal VARCHAR(50) NOT NULL,
+   PRIMARY KEY (idVille),
+   UNIQUE (codePostal)
+);
+
+CREATE TABLE OptionsHebergement (
+   idOption INT AUTO_INCREMENT,
+   nom VARCHAR(50) NOT NULL,
+   supplement INT,
+   PRIMARY KEY (idOption)
+);
+
+CREATE TABLE Tarif (
+   idTarif INT AUTO_INCREMENT,
+   prixAdulte INT NOT NULL,
+   prixEnfant INT NOT NULL,
+   prixVIP INT NOT NULL,
+   PRIMARY KEY (idTarif)
+);
+
+CREATE TABLE Categorie (
+   idType INT AUTO_INCREMENT,
+   nom VARCHAR(50) NOT NULL,
+   PRIMARY KEY (idType),
+   UNIQUE (nom)
+);
+
+CREATE TABLE Avis (
+   idAvis INT AUTO_INCREMENT,
+   nbEtoile INT NOT NULL CHECK (nbEtoile BETWEEN 1 AND 5),
+   commentaire VARCHAR(255) NOT NULL,
+   PRIMARY KEY (idAvis)
+);
+
+CREATE TABLE Hebergement (
+   idHebergement INT AUTO_INCREMENT,
+   nom VARCHAR(50) NOT NULL,
+   adresse VARCHAR(255) NOT NULL,
+   nbEtoile INT NOT NULL CHECK (nbEtoile BETWEEN 1 AND 5),
+   idTarif INT,
+   idType INT,
+   idVille INT,
+   PRIMARY KEY (idHebergement),
+   FOREIGN KEY (idTarif) REFERENCES Tarif(idTarif) ON DELETE SET NULL ON UPDATE CASCADE,
+   FOREIGN KEY (idType) REFERENCES Categorie(idType) ON DELETE SET NULL ON UPDATE CASCADE,
+   FOREIGN KEY (idVille) REFERENCES Ville(idVille) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE Reservation (
+   idReservation INT AUTO_INCREMENT,
+   dateArrivee DATETIME NOT NULL,
+   dateDepart DATETIME NOT NULL,
+   nbAdulte INT NOT NULL,
+   nbEnfant INT NOT NULL,
+   idUser INT,
+   idHebergement INT,
+   PRIMARY KEY (idReservation),
+   FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (idHebergement) REFERENCES Hebergement(idHebergement) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE HebergementOptions (
+   idHebergement INT,
+   idOption INT,
+   PRIMARY KEY (idHebergement, idOption),
+   FOREIGN KEY (idHebergement) REFERENCES Hebergement(idHebergement) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (idOption) REFERENCES OptionsHebergement(idOption) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE AvisUtilisateurReservation (
+   idUser INT,
+   idReservation INT,
+   idAvis INT,
+   PRIMARY KEY (idUser, idReservation, idAvis),
+   FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (idReservation) REFERENCES Reservation(idReservation) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (idAvis) REFERENCES Avis(idAvis) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE Hebergement
+ADD capaciteMin INT NOT NULL DEFAULT 1,
+ADD capaciteMax INT NOT NULL DEFAULT 2;
+
+ALTER TABLE Hebergement
+ADD CONSTRAINT chk_capacite CHECK (capaciteMin <= capaciteMax);
+
+ALTER TABLE Hebergement
+ADD dateOuverture DATE,
+ADD dateFermeture DATE;

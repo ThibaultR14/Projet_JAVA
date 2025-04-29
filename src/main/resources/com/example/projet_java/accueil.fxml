@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.AccueilController">
+
+    <!-- Barre en haut -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Booking" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Button text="Connexion" fx:id="connexionButton" onAction="#onConnexionClicked"/>
+            <Button text="Inscription" fx:id="inscriptionButton" onAction="#onInscriptionClicked"/>
+        </HBox>
+    </top>
+
+    <!-- Centre de la page -->
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <padding>
+                <Insets top="50" right="50" bottom="50" left="50"/>
+            </padding>
+            <Label text="Trouvez votre hébergement idéal" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+            <TextField fx:id="villeField" promptText="Où allez-vous ?" prefWidth="300"/>
+            <HBox spacing="15" alignment="CENTER">
+                <DatePicker fx:id="dateArriveePicker" promptText="Date d'arrivée"/>
+                <DatePicker fx:id="dateDepartPicker" promptText="Date de départ"/>
+            </HBox>
+            <Button text="Rechercher" fx:id="rechercherButton" onAction="#onRechercherClicked" style="-fx-font-size: 18px;"/>
+        </VBox>
+    </center>
+
+    <!-- Footer en bas -->
+    <bottom>
+        <HBox alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="© 2025 - Booking"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
