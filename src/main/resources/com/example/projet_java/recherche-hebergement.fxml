@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.RechercheHebergementController">
+
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label text="Recherche d'Hébergements" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <HBox spacing="10">
+                <VBox spacing="5">
+                    <Label text="Ville:"/>
+                    <TextField fx:id="villeField" promptText="Ex: Paris"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Date d'Arrivée:"/>
+                    <DatePicker fx:id="dateArriveePicker"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Date de Départ:"/>
+                    <DatePicker fx:id="dateDepartPicker"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Nombre d'Adultes:"/>
+                    <TextField fx:id="nbAdultesField" promptText="Ex: 2"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Nombre d'Enfants:"/>
+                    <TextField fx:id="nbEnfantsField" promptText="Ex: 1"/>
+                </VBox>
+                <Button text="Rechercher" onAction="#onRechercherClicked"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="hebergementTable" prefHeight="400" prefWidth="600">
+            <columns>
+                <TableColumn fx:id="nomColumn" text="Nom" prefWidth="150"/>
+                <TableColumn fx:id="adresseColumn" text="Adresse" prefWidth="250"/>
+                <TableColumn fx:id="etoileColumn" text="Étoiles" prefWidth="100"/>
+                <TableColumn fx:id="villeColumn" text="Ville" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>
