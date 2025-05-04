@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.JAVAcontroller.InscriptionController">
+
+    <!-- Titre en haut -->
+    <top>
+        <Label text="Formulaire d’inscription"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+    </top>
+
+    <!-- Formulaire centré -->
+    <center>
+        <VBox alignment="CENTER" spacing="15" prefWidth="400">
+            <padding>
+                <Insets top="20" right="40" bottom="20" left="40"/>
+            </padding>
+
+            <!-- Champ Nom -->
+            <TextField fx:id="nomField"
+                       promptText="Nom complet"
+                       prefWidth="300"
+                       style="-fx-font-size: 14px;"/>
+
+            <!-- Champ Email -->
+            <TextField fx:id="emailField"
+                       promptText="Adresse email"
+                       prefWidth="300"
+                       style="-fx-font-size: 14px;"/>
+
+            <!-- Champ Mot de passe -->
+            <PasswordField fx:id="passwordField"
+                           promptText="Mot de passe"
+                           prefWidth="300"
+                           style="-fx-font-size: 14px;"/>
+
+            <!-- Checkbox Admin -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <CheckBox fx:id="adminCheckBox"/>
+                <Label text="Administrateur" style="-fx-font-size: 14px;"/>
+            </HBox>
+
+            <!-- Bouton S’inscrire -->
+            <Button fx:id="inscrireButton"
+                    text="S’inscrire"
+                    prefWidth="150"
+                    style="-fx-font-size: 16px;"/>
+        </VBox>
+    </center>
+
+</BorderPane>

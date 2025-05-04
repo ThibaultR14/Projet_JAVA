@@ -1,31 +1,47 @@
 package com.example.JAVAmodel;
 
+import java.time.LocalDateTime;
+
+/**
+ * Classe représentant un utilisateur du système de réservation
+ */
 public class Utilisateur {
     private int idUser;
     private String nom;
     private String email;
     private String password;
     private boolean isAdmin;
+    private LocalDateTime premiereConnexion;
 
-    // Constructeur par défaut
-    public Utilisateur() {
-    }
-
-    // Constructeur pour créer un nouvel utilisateur (sans ID car auto-incrémenté)
-    public Utilisateur(String nom, String email, String password, boolean isAdmin) {
-        this.nom = nom;
-        this.email = email;
-        this.password = password;
-        this.isAdmin = isAdmin;
-    }
-
-    // Constructeur complet (avec ID) pour récupérer un utilisateur de la BDD
-    public Utilisateur(int idUser, String nom, String email, String password, boolean isAdmin) {
+    public Utilisateur(int idUser, String nom, String email, String password, boolean isAdmin, LocalDateTime premiereConnexion) {
         this.idUser = idUser;
         this.nom = nom;
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.premiereConnexion = premiereConnexion;
+    }
+
+    public boolean isNouvelUtilisateur() {
+        return premiereConnexion == null;
+    }
+
+
+    public boolean isAncienUtilisateur() {
+        if (premiereConnexion == null) {
+            return false; // Jamais connecté, donc pas un ancien utilisateur
+        }
+
+        // Calculer si la première connexion date d'il y a plus d'un mois
+        LocalDateTime unMoisAvant = LocalDateTime.now().minusMonths(1);
+        return premiereConnexion.isBefore(unMoisAvant);
+    }
+
+
+    public void enregistrerPremiereConnexion() {
+        if (premiereConnexion == null) {
+            premiereConnexion = LocalDateTime.now();
+        }
     }
 
     // Getters et Setters
@@ -65,11 +81,18 @@ public class Utilisateur {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
-    // Méthode toString() pour faciliter le débogage
+    public LocalDateTime getPremiereConnexion() {
+        return premiereConnexion;
+    }
+
+    public void setPremiereConnexion(LocalDateTime premiereConnexion) {
+        this.premiereConnexion = premiereConnexion;
+    }
+
     @Override
     public String toString() {
         return "Utilisateur{" +
@@ -77,6 +100,7 @@ public class Utilisateur {
                 ", nom='" + nom + '\'' +
                 ", email='" + email + '\'' +
                 ", isAdmin=" + isAdmin +
+                ", premiereConnexion=" + premiereConnexion +
                 '}';
     }
 }
