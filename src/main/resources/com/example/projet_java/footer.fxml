@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://javafx.com/fxml" alignment="CENTER" styleClass="footer-bar">
+    <padding><Insets top="10" bottom="10" left="10" right="10"/></padding>
+    <Label text="© 2025 - NotBooking" styleClass="text-light"/>
+</HBox>

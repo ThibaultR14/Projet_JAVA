@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class Main extends Application {
+public class BookingApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -18,6 +18,7 @@ public class Main extends Application {
 
             Parent root = FXMLLoader.load(url);
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/com/example/projet_java/style.css").toExternalForm());
             primaryStage.setTitle("Page d'Accueil");
             primaryStage.setScene(scene);
             primaryStage.setWidth(800);

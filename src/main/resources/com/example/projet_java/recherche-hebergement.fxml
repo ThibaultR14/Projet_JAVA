@@ -1,53 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.RechercheHebergementController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.RechercheHebergementController"
+            styleClass="root">
 
     <top>
-        <VBox spacing="10">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-
-            <Label text="Recherche d'Hébergements" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-            <HBox spacing="10">
-                <VBox spacing="5">
-                    <Label text="Ville:"/>
-                    <TextField fx:id="villeField" promptText="Ex: Paris"/>
-                </VBox>
-                <VBox spacing="5">
-                    <Label text="Date d'Arrivée:"/>
-                    <DatePicker fx:id="dateArriveePicker"/>
-                </VBox>
-                <VBox spacing="5">
-                    <Label text="Date de Départ:"/>
-                    <DatePicker fx:id="dateDepartPicker"/>
-                </VBox>
-                <VBox spacing="5">
-                    <Label text="Nombre d'Adultes:"/>
-                    <TextField fx:id="nbAdultesField" promptText="Ex: 2"/>
-                </VBox>
-                <VBox spacing="5">
-                    <Label text="Nombre d'Enfants:"/>
-                    <TextField fx:id="nbEnfantsField" promptText="Ex: 1"/>
-                </VBox>
-                <Button text="Rechercher" onAction="#onRechercherClicked"/>
-            </HBox>
-        </VBox>
+        <fx:include source="header.fxml"/>
     </top>
 
     <center>
-        <TableView fx:id="hebergementTable" prefHeight="400" prefWidth="600">
-            <columns>
-                <TableColumn fx:id="nomColumn" text="Nom" prefWidth="150"/>
-                <TableColumn fx:id="adresseColumn" text="Adresse" prefWidth="250"/>
-                <TableColumn fx:id="etoileColumn" text="Étoiles" prefWidth="100"/>
-                <TableColumn fx:id="villeColumn" text="Ville" prefWidth="100"/>
-            </columns>
-        </TableView>
+        <VBox spacing="20" alignment="TOP_CENTER">
+            <padding><Insets top="30" left="40" right="40" bottom="30"/></padding>
+
+            <Label text="Rechercher un hébergement" styleClass="title-label"/>
+
+            <HBox spacing="15" alignment="CENTER">
+                <TextField fx:id="villeField" promptText="Où allez-vous ?" prefWidth="200" styleClass="text-field"/>
+                <DatePicker fx:id="dateArriveePicker" promptText="Date d'arrivée" styleClass="date-picker"/>
+                <DatePicker fx:id="dateDepartPicker" promptText="Date de départ" styleClass="date-picker"/>
+            </HBox>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Label text="Adultes :" styleClass="text-dark"/>
+                <Spinner fx:id="nbAdultesSpinner" prefWidth="80"/>
+                <Label text="Enfants :" styleClass="text-dark"/>
+                <Spinner fx:id="nbEnfantsSpinner" prefWidth="80"/>
+                <Button text="Rechercher" onAction="#onRechercherClicked" styleClass="button-primary"/>
+            </HBox>
+
+
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" style="-fx-background-color: transparent; -fx-background: transparent;">
+                <VBox fx:id="resultatsContainer" spacing="15" alignment="TOP_CENTER" style="-fx-padding: 30 0 30 0;"/>
+            </ScrollPane>
+
+        </VBox>
     </center>
 
+    <bottom>
+        <fx:include source="footer.fxml"/>
+    </bottom>
 </BorderPane>

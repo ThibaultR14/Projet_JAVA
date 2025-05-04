@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.UtilisateurController">
+
+    <!-- Header -->
+    <top>
+        <fx:include source="header.fxml"/>
+    </top>
+
+    <!-- Contenu principal -->
+    <center>
+        <VBox spacing="15" alignment="CENTER" styleClass="content-container">
+            <Label text="Connexion" styleClass="title-label"/>
+
+            <!-- Champs de saisie avec largeur fixe -->
+            <TextField fx:id="emailField" promptText="Email" styleClass="text-field" prefWidth="300" maxWidth="300"/>
+            <PasswordField fx:id="passwordField" promptText="Mot de passe" styleClass="text-field" prefWidth="300" maxWidth="300"/>
+
+            <!-- Bouton de connexion -->
+            <Button text="Se connecter" onAction="#onConnexion" styleClass="button-primary" prefWidth="250"/>
+
+            <!-- Lien vers la page d'inscription -->
+            <Hyperlink text="Vous n'avez pas de compte ? Inscrivez-vous" onAction="#goToInscription" styleClass="text-dark"/>
+        </VBox>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <fx:include source="footer.fxml"/>
+    </bottom>
+
+</BorderPane>

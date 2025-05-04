@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.FicheHebergementController" styleClass="root">
+
+    <!-- Header -->
+    <top>
+        <fx:include source="header.fxml"/>
+    </top>
+
+    <!-- Centre avec ScrollPane -->
+    <center>
+        <!-- Enveloppe de la VBox dans un ScrollPane -->
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <content>
+                <VBox alignment="CENTER" spacing="25">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <!-- Conteneur pour centrer la boîte bleue -->
+                    <VBox alignment="CENTER" styleClass="card" spacing="25">
+                        <!-- Titre de l'hébergement -->
+                        <Label fx:id="nomLabel" styleClass="title-label" alignment="CENTER"/>
+
+                        <!-- Image de l'hébergement -->
+                        <HBox alignment="CENTER">
+                            <padding>
+                                <Insets top="20" right="20" bottom="20" left="20"/>
+                            </padding>
+                            <ImageView fx:id="photoView" fitHeight="300" fitWidth="400" preserveRatio="true" style="-fx-border-radius: 10; -fx-border-color: #93C5FD; -fx-border-width: 3;" />
+                        </HBox>
+
+                        <!-- Informations détaillées -->
+                        <GridPane hgap="20" vgap="15" styleClass="details-grid">
+                            <Label text="Adresse :" styleClass="text-dark" GridPane.halignment="CENTER"/>
+                            <Label fx:id="adresseLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.halignment="LEFT"/>
+
+                            <Label text="Étoiles :" styleClass="text-dark" GridPane.rowIndex="1" GridPane.halignment="CENTER"/>
+                            <Label fx:id="etoilesLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="LEFT"/>
+
+                            <Label text="Capacité :" styleClass="text-dark" GridPane.rowIndex="2" GridPane.halignment="CENTER"/>
+                            <Label fx:id="capaciteLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="LEFT"/>
+
+                            <Label text="Type :" styleClass="text-dark" GridPane.rowIndex="3" GridPane.halignment="CENTER"/>
+                            <Label fx:id="typeLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="LEFT"/>
+
+                            <Label text="Ville :" styleClass="text-dark" GridPane.rowIndex="4" GridPane.halignment="CENTER"/>
+                            <Label fx:id="villeLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.halignment="LEFT"/>
+
+                            <Label text="Tarif :" styleClass="text-dark" GridPane.rowIndex="5" GridPane.halignment="CENTER"/>
+                            <Label fx:id="tarifLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="LEFT"/>
+
+                            <Label text="Dates d'ouverture :" styleClass="text-dark" GridPane.rowIndex="6" GridPane.halignment="CENTER"/>
+                            <Label fx:id="datesLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.halignment="LEFT"/>
+                        </GridPane>
+
+                        <!-- Section options -->
+                        <VBox spacing="15" styleClass="options-section">
+                            <Label text="Options supplémentaires" styleClass="section-title"/>
+                            <VBox fx:id="optionsContainer" spacing="10" styleClass="options-list"/>
+                        </VBox>
+
+                        <!-- Bouton de retour -->
+                        <Button text="Retour à la recherche" onAction="#onRetourRecherche" styleClass="button-primary" maxWidth="200" alignment="CENTER" />
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <fx:include source="footer.fxml"/>
+    </bottom>
+
+</BorderPane>

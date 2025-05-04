@@ -3,80 +3,38 @@ package com.example.JAVAmodel;
 public class Utilisateur {
     private int idUser;
     private String nom;
+    private String prenom;
     private String email;
     private String password;
     private boolean isAdmin;
 
-    // Constructeur par défaut
-    public Utilisateur() {
-    }
-
-    // Constructeur pour créer un nouvel utilisateur (sans ID car auto-incrémenté)
-    public Utilisateur(String nom, String email, String password, boolean isAdmin) {
+    // Constructeur pour l'inscription (sans idUser)
+    public Utilisateur(String nom, String prenom, String email, String password, boolean isAdmin) {
         this.nom = nom;
+        this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
     }
 
-    // Constructeur complet (avec ID) pour récupérer un utilisateur de la BDD
-    public Utilisateur(int idUser, String nom, String email, String password, boolean isAdmin) {
-        this.idUser = idUser;
-        this.nom = nom;
-        this.email = email;
-        this.password = password;
-        this.isAdmin = isAdmin;
-    }
-
-    // Getters et Setters
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
+    // Constructeur pour récupération depuis la BDD (avec idUser)
+    public Utilisateur(int idUser, String nom, String prenom, String email, String password, boolean isAdmin) {
+        this(nom, prenom, email, password, isAdmin);
         this.idUser = idUser;
     }
 
-    public String getNom() {
-        return nom;
-    }
+    // Getters
+    public int getIdUser() { return idUser; }
+    public String getNom() { return nom; }
+    public String getPrenom() { return prenom; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public boolean isAdmin() { return isAdmin; }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    // Méthode toString() pour faciliter le débogage
-    @Override
-    public String toString() {
-        return "Utilisateur{" +
-                "idUser=" + idUser +
-                ", nom='" + nom + '\'' +
-                ", email='" + email + '\'' +
-                ", isAdmin=" + isAdmin +
-                '}';
-    }
+    // Setters
+    public void setNom(String nom) { this.nom = nom; }
+    public void setPrenom(String prenom) { this.prenom = prenom; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
+    public void setAdmin(boolean admin) { isAdmin = admin; }
 }

@@ -1,0 +1,104 @@
+/* Couleurs globales */
+.root {
+    -fx-background-color: #DBEAFE; /* fond clair général */
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+/* Header / Footer */
+.header-bar {
+    -fx-background-color: #1E3A8A;
+    -fx-padding: 10;
+}
+
+.header-bar Label,
+.footer-bar Label {
+    -fx-text-fill: #F8FAFC;
+}
+
+/* Footer */
+.footer-bar {
+    -fx-background-color: #1E3A8A;
+    -fx-padding: 10;
+}
+
+/* Titres */
+.title-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E293B;
+}
+
+.logo-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F8FAFC;
+}
+
+/* Champs de saisie */
+.text-field, .date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #93C5FD;
+    -fx-border-radius: 4;
+    -fx-padding: 6;
+}
+
+/* Boutons */
+.button-primary {
+    -fx-background-color: #3B82F6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button-success {
+    -fx-background-color: #38BDF8;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button-secondary {
+    -fx-background-color: #64748B;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-opacity: 0.9;
+}
+
+/* Zones / blocs */
+.card {
+    -fx-background-color: #EFF6FF;
+    -fx-border-color: #93C5FD;
+    -fx-border-radius: 8;
+    -fx-padding: 15;
+}
+
+/* Autres textes */
+.text-dark {
+    -fx-text-fill: #1E293B;
+}
+
+.text-light {
+    -fx-text-fill: #F8FAFC;
+}
+
+
+.profil-card {
+    -fx-background-color: #F0F9FF; /* bleu clair doux */
+    -fx-border-color: #93C5FD;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.button-logout {
+    -fx-background-color: #F87171; /* rouge clair (ex: Tailwind red-400) */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 4;
+}
+
+.button-logout:hover {
+    -fx-opacity: 0.9;
+}
+
+
