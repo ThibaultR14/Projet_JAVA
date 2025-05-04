@@ -5,15 +5,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml">
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.ConnexionController">
    <VBox alignment="CENTER" spacing="20" maxWidth="300" style="-fx-background-color: #f9f9f9; -fx-padding: 40; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 2);">
 
       <Label text="Connexion" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-      <TextField promptText="Email" maxWidth="250" />
-      <PasswordField promptText="Mot de passe" maxWidth="250" />
+      <TextField fx:id="emailField" promptText="Email" maxWidth="250" />
+      <PasswordField fx:id="passwordField" promptText="Mot de passe" maxWidth="250" />
 
-      <Button text="Se connecter" maxWidth="250" style="-fx-text-fill: white; -fx-font-weight: bold;" />
+      <Button fx:id="connexionButton" text="Se connecter" maxWidth="250" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-background-color: #4CAF50;" />
 
    </VBox>
 </StackPane>

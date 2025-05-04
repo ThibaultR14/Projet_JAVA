@@ -5,6 +5,8 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.JAVAcontroller.ConnexionController;
+import javafx.scene.control.Alert;
 
 /**
  * Implémentation de l'interface UtilisateurDAO pour les opérations sur les utilisateurs
@@ -239,4 +241,21 @@ public class UtilisateurDAO {
 
         return new Utilisateur(idUser, nom, email, password, isAdmin, premiereConnexion);
     }
+
+    public boolean verifierUtilisateur(String email, String password) {
+        String sql = "SELECT 1 FROM utilisateurs WHERE email = ? AND password = ?";
+
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next(); // retourne true si une ligne correspond
+
+        } catch (SQLException e) {
+            System.err.println("Erreur SQL : " + e.getMessage());
+            return false;
+        }
+    }
+
 }
