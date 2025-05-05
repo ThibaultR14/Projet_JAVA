@@ -1,12 +1,13 @@
 package com.example.JAVAcontroller;
 
+import com.example.projet_java.SceneSwitcher;
+import com.example.projet_java.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,24 +34,54 @@ public class AccueilController {
     private Button inscriptionButton;
 
     @FXML
+    private HBox headerBar;
+
+    @FXML
+    public void initialize() {
+        if (Session.estConnecte()) {
+            // Cacher les boutons de connexion et d'inscription
+            connexionButton.setVisible(false);
+            inscriptionButton.setVisible(false);
+
+            // Ajouter le bouton "Mon Compte"
+            Button monCompteButton = new Button("Mon Compte");
+            monCompteButton.getStyleClass().add("button-secondary");
+            monCompteButton.setOnAction(e -> {
+                SceneSwitcher.switchScene(
+                        (Stage) monCompteButton.getScene().getWindow(),
+                        "/com/example/projet_java/mon-compte.fxml",
+                        "Mon Compte"
+                );
+            });
+
+            if (connexionButton.getParent() instanceof HBox hbox) {
+                hbox.getChildren().add(monCompteButton);
+            }
+        }
+    }
+
+    @FXML
     public void onRechercherClicked() {
         try {
-            // Charger le fichier FXML de la page de recherche
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet_java/recherche-hebergement.fxml"));
             Parent root = loader.load();
 
-            com.example.JAVAcontroller.RechercheHebergementController controller = loader.getController();
-
+            RechercheHebergementController controller = loader.getController();
             controller.initData(
                     villeField.getText(),
                     dateArriveePicker.getValue(),
                     dateDepartPicker.getValue()
             );
 
+            Scene scene = new Scene(root);
+            // ✅ Ajout du CSS ici :
+            scene.getStylesheets().add(getClass().getResource("/com/example/projet_java/style.css").toExternalForm());
+
             Stage stage = (Stage) rechercherButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(scene);
             stage.setTitle("Recherche d'Hébergements");
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,13 +89,19 @@ public class AccueilController {
 
     @FXML
     public void onConnexionClicked() {
-        System.out.println("Clic sur Connexion");
-        // À faire : ouvrir la page de connexion
+        SceneSwitcher.switchScene(
+                (Stage) connexionButton.getScene().getWindow(),
+                "/com/example/projet_java/connexion.fxml",
+                "Connexion"
+        );
     }
 
     @FXML
     public void onInscriptionClicked() {
-        System.out.println("Clic sur Inscription");
-        // À faire : ouvrir la page d'inscription
+        SceneSwitcher.switchScene(
+                (Stage) inscriptionButton.getScene().getWindow(),
+                "/com/example/projet_java/inscription.fxml",
+                "Inscription"
+        );
     }
 }

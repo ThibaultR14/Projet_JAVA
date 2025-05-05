@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.JAVAcontroller.HeaderController"
+      spacing="20" alignment="CENTER_LEFT" styleClass="header-bar">
+
+    <padding>
+        <Insets top="10" bottom="10" left="20" right="20"/>
+    </padding>
+
+    <!-- Logo -->
+    <Label text="NotBooking" styleClass="logo-label" onMouseClicked="#onLogoClicked"/>
+
+    <!-- Spacer to push buttons to the right -->
+    <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
+
+    <!-- Bouton principal dynamique : Connexion ou Mon Compte -->
+    <Button fx:id="navButton" styleClass="button-secondary" onAction="#onNavClicked"/>
+</HBox>
