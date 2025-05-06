@@ -64,15 +64,8 @@ public class MonCompteController {
             carteInfos.setHgap(15);
             carteInfos.setVgap(10);
 
-            // Sécurité sur la taille du numéro
-            String numero = u.getNumeroCB();
-            String numMasque = (numero != null && numero.length() >= 4)
-                    ? "**** **** **** " + numero.substring(numero.length() - 4)
-                    : "Numéro invalide";
-
-            String cryptoMasque = (u.getCryptogramme() != null && u.getCryptogramme().length() == 3)
-                    ? "***"
-                    : "Invalide";
+            String numMasque = "**** **** **** " + u.getNumeroCB().substring(u.getNumeroCB().length() - 4);
+            String cryptoMasque = "***";
 
             typeCarteField = new TextField(u.getTypeCarte());
             numeroCBField = new TextField(numMasque);
@@ -98,9 +91,22 @@ public class MonCompteController {
             enregistrerCarteButton.setVisible(false);
             enregistrerCarteButton.setOnAction(e -> enregistrerCarte(u));
 
-            paiementBox.getChildren().addAll(carteInfos, modifierCarteButton, enregistrerCarteButton);
+            // ✅ Bouton supprimer la carte
+            Button supprimerCarteButton = new Button("Supprimer la carte");
+            supprimerCarteButton.getStyleClass().add("button-logout");
+            supprimerCarteButton.setOnAction(e -> {
+                u.setNumeroCB(null);
+                u.setCryptogramme(null);
+                u.setExpiration(null);
+                u.setTypeCarte(null);
+                UtilisateurDAO.mettreAJourCarte(u);
+                afficherPaiement(u); // Rechargement
+            });
+
+            paiementBox.getChildren().addAll(carteInfos, modifierCarteButton, enregistrerCarteButton, supprimerCarteButton);
         }
     }
+
 
     private void activerEditionCarte(Utilisateur u, boolean isAjout) {
         if (isAjout) {

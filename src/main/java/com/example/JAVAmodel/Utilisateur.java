@@ -11,7 +11,7 @@ public class Utilisateur {
     private boolean isAdmin;
 
     // Champs pour la carte bancaire
-    private String typeCarte;
+    private String type_carte;
     private String numeroCB;
     private String cryptogramme;
     private LocalDate expiration;
@@ -39,7 +39,7 @@ public class Utilisateur {
     public String getPassword() { return password; }
     public boolean isAdmin() { return isAdmin; }
 
-    public String getTypeCarte() { return typeCarte; }
+    public String getTypeCarte() { return type_carte; }
     public String getNumeroCB() { return numeroCB; }
     public String getCryptogramme() { return cryptogramme; }
     public LocalDate getExpiration() { return expiration; }
@@ -51,7 +51,7 @@ public class Utilisateur {
     public void setPassword(String password) { this.password = password; }
     public void setAdmin(boolean admin) { isAdmin = admin; }
 
-    public void setTypeCarte(String typeCarte) { this.typeCarte = typeCarte; }
+    public void setTypeCarte(String type_carte) { this.type_carte = type_carte; }
     public void setNumeroCB(String numeroCB) { this.numeroCB = numeroCB; }
     public void setCryptogramme(String cryptogramme) { this.cryptogramme = cryptogramme; }
     public void setExpiration(LocalDate expiration) { this.expiration = expiration; }

@@ -20,4 +20,5 @@ public class Session {
     public static void deconnexion() {
         utilisateurActif = null;
     }
+
 }
