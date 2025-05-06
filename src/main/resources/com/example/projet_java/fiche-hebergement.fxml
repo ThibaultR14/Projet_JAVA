@@ -67,7 +67,13 @@
                         </VBox>
 
                         <!-- Bouton de retour -->
-                        <Button text="Retour à la recherche" onAction="#onRetourRecherche" styleClass="button-primary" maxWidth="200" alignment="CENTER" />
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button text="Retour à la recherche" onAction="#onRetourRecherche" styleClass="button-primary" maxWidth="200" alignment="CENTER" />
+
+                            <Button text="Réserver cet hébergement" onAction="#onReserverClicked"
+                                    styleClass="button-success" />
+                        </HBox>
+
                     </VBox>
                 </VBox>
             </content>

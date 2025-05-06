@@ -7,19 +7,31 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.AccueilController"
             styleClass="root">
 
-    <!-- Barre en haut -->
     <top>
         <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="header-bar">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
+
+            <!-- Logo à gauche -->
             <Label text="NotBooking" styleClass="logo-label"/>
+
+            <!-- Espace extensible pour pousser le reste à droite -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Boutons à droite -->
+
             <Button text="Connexion" fx:id="connexionButton" onAction="#onConnexionClicked"
                     styleClass="button-primary"/>
             <Button text="Inscription" fx:id="inscriptionButton" onAction="#onInscriptionClicked"
                     styleClass="button-success"/>
+            <Button text="Ajouter un hebergement" onAction="#onUploadClicked" fx:id="uploadButton" styleClass="button-secondary"/>
+
         </HBox>
     </top>
+
+
+
 
     <!-- Centre de la page -->
     <center>

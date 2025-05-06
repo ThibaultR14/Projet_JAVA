@@ -33,6 +33,25 @@ public class Hebergement {
         this.dateOuverture = dateOuverture;
         this.dateFermeture = dateFermeture;
     }
+    public Hebergement(String nom, String adresse, int nbEtoile,
+                       int capaciteMin, int capaciteMax,
+                       String photo, int idTarif, int idVille,
+                       LocalDate dateOuverture, LocalDate dateFermeture) {
+        this.nom = nom;
+        this.adresse = adresse;
+        this.nbEtoile = nbEtoile;
+        this.capaciteMin = capaciteMin;
+        this.capaciteMax = capaciteMax;
+        this.photo = photo;
+        this.idTarif = idTarif;
+        this.idVille = idVille;
+        this.dateOuverture = dateOuverture;
+        this.dateFermeture = dateFermeture;
+    }
+
+
+
+
 
     // Getters
     public int getIdHebergement() { return idHebergement; }

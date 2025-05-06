@@ -4,23 +4,19 @@ import com.example.JAVAdao.HebergementDAO;
 import com.example.JAVAdao.TarifDAO;
 import com.example.JAVAmodel.Tarif;
 import com.example.JAVAmodel.Hebergement;
-import com.example.JAVAdao.OptionHebergementDAO;
-import com.example.JAVAmodel.OptionHebergement;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-import java.io.IOException; // N'oublie pas d'importer IOException
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -39,12 +35,27 @@ public class RechercheHebergementController {
         nbEnfantsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 0));
     }
 
-    // Appelée depuis AccueilController
-    public void initData(String ville, LocalDate dateArrivee, LocalDate dateDepart) {
+    public void initData(String ville, LocalDate dateArrivee, LocalDate dateDepart, int nbAdultes, int nbEnfants) {
         villeField.setText(ville);
         dateArriveePicker.setValue(dateArrivee);
         dateDepartPicker.setValue(dateDepart);
+
+        nbAdultesSpinner.getValueFactory().setValue(nbAdultes);
+        nbEnfantsSpinner.getValueFactory().setValue(nbEnfants);
+
+        onRechercherClicked();
     }
+
+    public void initData2(String ville, LocalDate dateArrivee, LocalDate dateDepart) {
+        villeField.setText(ville);
+        dateArriveePicker.setValue(dateArrivee);
+        dateDepartPicker.setValue(dateDepart);
+
+
+        onRechercherClicked();
+    }
+
+
 
     @FXML
     public void onRechercherClicked() {
@@ -65,7 +76,8 @@ public class RechercheHebergementController {
         int nbEnfants = nbEnfantsSpinner.getValue();
 
         for (Hebergement h : liste) {
-            if (h.getCapaciteMax() < totalPersonnes) continue;
+            // ✅ Vérifie que le nombre total de personnes est dans la plage de capacité autorisée
+            if (totalPersonnes < h.getCapaciteMin() || totalPersonnes > h.getCapaciteMax()) continue;
 
             Tarif tarif = TarifDAO.getTarifById(h.getIdTarif());
             if (tarif == null) continue;
@@ -82,10 +94,11 @@ public class RechercheHebergementController {
             imageView.setPreserveRatio(true);
 
             try {
-                Image image = new Image(getClass().getResource("/images/default.jpg").toExternalForm());
+                String imagePath = "/images/" + (h.getPhoto() != null ? h.getPhoto() : "default.jpg");
+                Image image = new Image(getClass().getResource(imagePath).toExternalForm());
                 imageView.setImage(image);
             } catch (Exception e) {
-                System.out.println("Image introuvable.");
+                imageView.setImage(new Image(getClass().getResource("/images/default.jpg").toExternalForm()));
             }
 
             VBox texteBox = new VBox(8);
@@ -112,13 +125,11 @@ public class RechercheHebergementController {
             Label details = new Label(nbAdultes + " adulte(s), " + nbEnfants + " enfant(s)");
             details.setStyle("-fx-font-size: 12px; -fx-text-fill: #64748B;");
 
-            // Ajouter le bouton "Voir plus"
             Button voirPlusBtn = new Button("Voir plus");
             voirPlusBtn.getStyleClass().add("button-secondary");
-            voirPlusBtn.setOnAction(e -> ouvrirFicheHebergement(h)); // Associe l'action d'ouverture
+            voirPlusBtn.setOnAction(e -> ouvrirFicheHebergement(h));
 
-            blocPrix.getChildren().addAll(prix, details, voirPlusBtn); // Le bouton est bien placé ici
-
+            blocPrix.getChildren().addAll(prix, details, voirPlusBtn);
             carte.getChildren().addAll(imageView, texteBox, spacer, blocPrix);
 
             resultatsContainer.getChildren().add(carte);
@@ -131,8 +142,12 @@ public class RechercheHebergementController {
         }
     }
 
+    public void setPersonnes(int adultes, int enfants) {
+        nbAdultesSpinner.getValueFactory().setValue(adultes);
+        nbEnfantsSpinner.getValueFactory().setValue(enfants);
+    }
 
-    // Cette méthode gère l'ouverture de la fiche détaillée de l'hébergement
+
     private void ouvrirFicheHebergement(Hebergement h) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet_java/fiche-hebergement.fxml"));
@@ -141,10 +156,16 @@ public class RechercheHebergementController {
             FicheHebergementController controller = loader.getController();
             controller.setHebergement(h);
 
-            // Créer la nouvelle scène
-            Scene scene = new Scene(root);
+            // 🔁 On passe le contexte de recherche à la fiche
+            controller.initRechercheContext(
+                    villeField.getText(),
+                    dateArriveePicker.getValue(),
+                    dateDepartPicker.getValue(),
+                    nbAdultesSpinner.getValue(),
+                    nbEnfantsSpinner.getValue()
+            );
 
-            // Appliquer le CSS à cette scène
+            Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/com/example/projet_java/style.css").toExternalForm());
 
             Stage stage = (Stage) villeField.getScene().getWindow();
@@ -153,7 +174,7 @@ public class RechercheHebergementController {
             stage.show();
 
         } catch (IOException e) {
-            e.printStackTrace();  // Affichage de l'exception dans la console en cas d'erreur
+            e.printStackTrace();
         }
     }
 

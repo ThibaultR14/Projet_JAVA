@@ -36,8 +36,11 @@ public class AccueilController {
     @FXML
     private HBox headerBar;
 
+
+
     @FXML
     public void initialize() {
+
         if (Session.estConnecte()) {
             // Cacher les boutons de connexion et d'inscription
             connexionButton.setVisible(false);
@@ -67,11 +70,12 @@ public class AccueilController {
             Parent root = loader.load();
 
             RechercheHebergementController controller = loader.getController();
-            controller.initData(
+            controller.initData2(
                     villeField.getText(),
                     dateArriveePicker.getValue(),
                     dateDepartPicker.getValue()
             );
+
 
             Scene scene = new Scene(root);
             // ✅ Ajout du CSS ici :
@@ -104,4 +108,19 @@ public class AccueilController {
                 "Inscription"
         );
     }
+    @FXML
+    public void onUploadClicked() {
+        Stage stage = (Stage) connexionButton.getScene().getWindow(); // ou un autre composant de la scène
+
+        if (!Session.estConnecte()) {
+            // Rediriger vers la page de connexion si non connecté
+            SceneSwitcher.switchScene(stage, "/com/example/projet_java/connexion.fxml", "Connexion");
+        } else {
+            // Sinon, aller vers ajout-hebergement
+            SceneSwitcher.switchScene(stage, "/com/example/projet_java/ajout-hebergement.fxml", "Mettre en ligne un hébergement");
+        }
+    }
+
+
+
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.JAVAcontroller.AjoutHebergementController"
+      spacing="20"
+      alignment="TOP_CENTER"
+      styleClass="root">
+
+    <!-- Header -->
+    <fx:include source="header.fxml"/>
+
+    <!-- Scrollable Form -->
+    <ScrollPane fx:id="mainScrollPane"
+                fitToWidth="true"
+                pannable="true"
+                hbarPolicy="NEVER"
+                vbarPolicy="AS_NEEDED"
+                style="-fx-background-color: transparent;">
+        <content>
+            <VBox alignment="TOP_CENTER" spacing="25">
+                <VBox spacing="20"
+                      alignment="TOP_CENTER"
+                      maxWidth="500"
+                      style="-fx-background-color: #F9FAFB; -fx-background-radius: 12; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+
+                    <Label text="Mettre en ligne un hébergement" styleClass="title-label"/>
+
+                    <TextField fx:id="nomField" promptText="Nom de l'hébergement" prefWidth="400" />
+                    <TextField fx:id="adresseField" promptText="Adresse" prefWidth="400" />
+
+                    <HBox spacing="10">
+                        <TextField fx:id="capaciteMinField" promptText="Capacité min" prefWidth="195"/>
+                        <TextField fx:id="capaciteMaxField" promptText="Capacité max" prefWidth="195"/>
+                    </HBox>
+
+                    <TextField fx:id="etoilesField" promptText="Nombre d'étoiles (1 à 5)" prefWidth="400"/>
+                    <TextField fx:id="villeField" promptText="Ville" prefWidth="400"/>
+                    <TextField fx:id="codePostalField" promptText="Code postal" prefWidth="400"/>
+
+                    <HBox spacing="10">
+                        <DatePicker fx:id="dateOuverturePicker" promptText="Date d'ouverture" prefWidth="195"/>
+                        <DatePicker fx:id="dateFermeturePicker" promptText="Date de fermeture" prefWidth="195"/>
+                    </HBox>
+
+                    <!-- Drop Zone Image -->
+                    <Label text="Photo de l'hebergement" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #1E3A8A; "/>
+                    <VBox fx:id="dropZone" alignment="CENTER" spacing="10"
+                          style="-fx-border-color: #1b5293; -fx-border-style: dashed; -fx-padding: 20; -fx-border-radius: 8; -fx-background-color: #EFF6FF;">
+                        <Label fx:id="dropLabel" text="Déposez une image ici" style="-fx-text-fill: #3B82F6;"/>
+                        <ImageView fx:id="previewImage" fitHeight="100" fitWidth="150" preserveRatio="true"/>
+                    </VBox>
+
+                    <Label text="Tarifs" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #1E3A8A;"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="prixAdulteField" promptText="Prix adulte" prefWidth="125"/>
+                        <TextField fx:id="prixEnfantField" promptText="Prix enfant" prefWidth="125"/>
+                        <TextField fx:id="prixVIPField" promptText="Prix VIP" prefWidth="125"/>
+                    </HBox>
+
+                    <Button fx:id="submitButton" text="Publier"
+                            styleClass="button-success"
+                            prefWidth="180"
+                            alignment="CENTER"/>
+                </VBox>
+            </VBox>
+        </content>
+    </ScrollPane>
+
+    <!-- Footer -->
+    <fx:include source="footer.fxml"/>
+</VBox>

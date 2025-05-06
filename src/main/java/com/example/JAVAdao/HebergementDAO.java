@@ -176,4 +176,28 @@ public class HebergementDAO {
                 rs.getDate("dateFermeture") != null ? rs.getDate("dateFermeture").toLocalDate() : null
         );
     }
+
+    public void ajouterHebergement(Hebergement h) throws SQLException {
+        String sql = "INSERT INTO Hebergement (nom, adresse, capaciteMin, capaciteMax, nbEtoile, photo, idTarif, dateOuverture, dateFermeture, idVille) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connexionbdd.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, h.getNom());
+            stmt.setString(2, h.getAdresse());
+            stmt.setInt(3, h.getCapaciteMin());
+            stmt.setInt(4, h.getCapaciteMax());
+            stmt.setInt(5, h.getNbEtoile());
+            stmt.setString(6, h.getPhoto());
+            stmt.setInt(7, h.getIdTarif());  // ✅ manquant dans ton code
+            stmt.setDate(8, (h.getDateOuverture() != null) ? Date.valueOf(h.getDateOuverture()) : null);
+            stmt.setDate(9, (h.getDateFermeture() != null) ? Date.valueOf(h.getDateFermeture()) : null);
+            stmt.setInt(10, h.getIdVille());
+
+            stmt.executeUpdate();
+        }
+    }
+
+
 }

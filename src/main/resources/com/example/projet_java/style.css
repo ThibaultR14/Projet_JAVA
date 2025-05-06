@@ -56,7 +56,8 @@
 }
 
 .button-secondary {
-    -fx-background-color: #64748B;
+    -fx-background-color:#192F70
+;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
@@ -76,6 +77,19 @@
 /* Autres textes */
 .text-dark {
     -fx-text-fill: #1E293B;
+}
+
+/* Autres textes */
+.text-s {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E293B;
+}
+
+.text-reduction{
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5bf22e;
 }
 
 .text-light {
@@ -102,3 +116,22 @@
 }
 
 
+/* ScrollPane custom transparent */
+.main-scroll {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.main-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-field, .date-picker {
+    -fx-background-radius: 6;
+    -fx-padding: 4 8;
+    -fx-font-size: 13px;
+}

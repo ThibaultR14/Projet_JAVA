@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.JAVAcontroller.ReservationController"
+            styleClass="root">
+
+    <top>
+        <fx:include source="header.fxml"/>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="25" styleClass="card">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+
+            <Label text="Réserver cet hébergement" styleClass="title-label"/>
+            <Label fx:id="hebergementNomLabel" styleClass="title-label"/>
+
+            <!-- Dates de séjour -->
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Date d'arrivée" styleClass="text-dark"/>
+                    <DatePicker fx:id="dateArriveePicker" styleClass="date-picker"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Date de départ" styleClass="text-dark"/>
+                    <DatePicker fx:id="dateDepartPicker" styleClass="date-picker"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Disponibilité" styleClass="text-dark"/>
+                    <Label fx:id="datesLabel" text="(Ouvert du ... au ...)" styleClass="text-muted"/>
+                </VBox>
+            </HBox>
+
+            <!-- Nombre de personnes -->
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Adultes" styleClass="text-dark"/>
+                    <Spinner fx:id="nbAdultesSpinner"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Enfants" styleClass="text-dark"/>
+                    <Spinner fx:id="nbEnfantsSpinner"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Capacité" styleClass="text-dark"/>
+                    <Label fx:id="capaciteLabel" text="(Capacité : X à Y)" styleClass="text-muted"/>
+                </VBox>
+            </HBox>
+
+            <!-- Estimation -->
+            <Label fx:id="tarifEstimeLabel" styleClass="text-dark"/>
+
+            <!-- Bouton -->
+            <Button text="Valider la réservation" fx:id="reserverButton"
+                    styleClass="button-success" onAction="#onReserverClicked"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <fx:include source="footer.fxml"/>
+    </bottom>
+</BorderPane>

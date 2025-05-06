@@ -18,6 +18,9 @@
     <!-- Spacer to push buttons to the right -->
     <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
 
+
     <!-- Bouton principal dynamique : Connexion ou Mon Compte -->
     <Button fx:id="navButton" styleClass="button-secondary" onAction="#onNavClicked"/>
+    <Button text="Ajouter un hebergement" onAction="#onUploadClicked" fx:id="uploadButton" styleClass="button-secondary"/>
+
 </HBox>

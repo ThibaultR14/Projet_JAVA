@@ -105,3 +105,31 @@ ADD CONSTRAINT chk_capacite CHECK (capaciteMin <= capaciteMax);
 ALTER TABLE Hebergement
 ADD dateOuverture DATE,
 ADD dateFermeture DATE;
+
+
+-- Ajouter la colonne "photo" dans Hebergement
+ALTER TABLE Hebergement
+ADD photo VARCHAR(255);
+
+-- Ajouter la colonne "prenom" dans Utilisateur
+ALTER TABLE Utilisateur
+ADD prenom VARCHAR(50) NOT NULL DEFAULT 'Inconnu';
+
+
+CREATE TABLE Reduction (
+   idReduction INT AUTO_INCREMENT,
+   code VARCHAR(50) NOT NULL UNIQUE,
+   pourcentage INT NOT NULL CHECK (pourcentage BETWEEN 1 AND 100),
+   description VARCHAR(255),
+   dateDebut DATE,
+   dateFin DATE,
+   PRIMARY KEY (idReduction)
+);
+
+CREATE TABLE UtilisateurReduction (
+   idUser INT,
+   idReduction INT,
+   PRIMARY KEY (idUser, idReduction),
+   FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (idReduction) REFERENCES Reduction(idReduction) ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -1,5 +1,7 @@
 package com.example.JAVAmodel;
 
+import java.time.LocalDate;
+
 public class Utilisateur {
     private int idUser;
     private String nom;
@@ -7,6 +9,12 @@ public class Utilisateur {
     private String email;
     private String password;
     private boolean isAdmin;
+
+    // Champs pour la carte bancaire
+    private String typeCarte;
+    private String numeroCB;
+    private String cryptogramme;
+    private LocalDate expiration;
 
     // Constructeur pour l'inscription (sans idUser)
     public Utilisateur(String nom, String prenom, String email, String password, boolean isAdmin) {
@@ -31,10 +39,20 @@ public class Utilisateur {
     public String getPassword() { return password; }
     public boolean isAdmin() { return isAdmin; }
 
+    public String getTypeCarte() { return typeCarte; }
+    public String getNumeroCB() { return numeroCB; }
+    public String getCryptogramme() { return cryptogramme; }
+    public LocalDate getExpiration() { return expiration; }
+
     // Setters
     public void setNom(String nom) { this.nom = nom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }
     public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
     public void setAdmin(boolean admin) { isAdmin = admin; }
+
+    public void setTypeCarte(String typeCarte) { this.typeCarte = typeCarte; }
+    public void setNumeroCB(String numeroCB) { this.numeroCB = numeroCB; }
+    public void setCryptogramme(String cryptogramme) { this.cryptogramme = cryptogramme; }
+    public void setExpiration(LocalDate expiration) { this.expiration = expiration; }
 }

@@ -42,5 +42,19 @@ public class HeaderController {
                 "Accueil"
         );
     }
+    @FXML
+    public void onUploadClicked() {
+        Stage stage = (Stage) navButton.getScene().getWindow(); // ou un autre composant de la scène
+
+        if (!Session.estConnecte()) {
+            // Rediriger vers la page de connexion si non connecté
+            SceneSwitcher.switchScene(stage, "/com/example/projet_java/connexion.fxml", "Connexion");
+        } else {
+            // Sinon, aller vers ajout-hebergement
+            SceneSwitcher.switchScene(stage, "/com/example/projet_java/ajout-hebergement.fxml", "Mettre en ligne un hébergement");
+        }
+    }
+
+
 
 }
