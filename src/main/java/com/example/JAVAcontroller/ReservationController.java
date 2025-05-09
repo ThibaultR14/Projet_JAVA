@@ -2,6 +2,8 @@ package com.example.JAVAcontroller;
 
 import com.example.JAVAdao.ReservationDAO;
 import com.example.JAVAdao.UtilisateurDAO;
+import com.example.JAVAdao.HebergementDAO;
+
 import com.example.JAVAmodel.Hebergement;
 import com.example.JAVAmodel.Reservation;
 import com.example.JAVAmodel.Utilisateur;
@@ -34,6 +36,8 @@ public class ReservationController {
     @FXML private Spinner<Integer> nbEnfantsSpinner;
     @FXML private Button reserverButton;
     @FXML private Label tarifEstimeLabel;
+    @FXML private Label etoilesLabel;
+
 
     @FXML private VBox carteFormBox;
     @FXML private TextField typeCarteField;
@@ -60,6 +64,9 @@ public class ReservationController {
     public void setHebergement(Hebergement hebergement) {
         this.hebergement = hebergement;
         hebergementNomLabel.setText(hebergement.getNom());
+        etoilesLabel.setText("★".repeat(hebergement.getNbEtoile()));
+
+
 
         // ⚠️ Charger le tarif
         var tarif = com.example.JAVAdao.TarifDAO.getTarifById(hebergement.getIdTarif());
@@ -230,11 +237,13 @@ public class ReservationController {
         boolean ok = ReservationDAO.ajouterReservation(r);
 
         if (ok) {
+            HebergementDAO.marquerCommeReserve(hebergement.getIdHebergement());
+
             showConfirmation("Réservation enregistrée !");
             SceneSwitcher.switchScene(
                     (Stage) dateArriveePicker.getScene().getWindow(),
-                    "/com/example/projet_java/mon-compte.fxml",
-                    "Mon Compte"
+                    "/com/example/projet_java/mes-reservations.fxml",
+                    "Mes réservations"
             );
         } else {
             showError("Erreur lors de l'enregistrement.");
@@ -270,6 +279,9 @@ public class ReservationController {
         var utilisateur = Session.getUtilisateur();
         if (utilisateur == null) return;
 
+        // Masquer proprement le formulaire de carte
+        carteFormBox.setVisible(false);
+        carteFormBox.setManaged(false);
         if (utilisateur.getNumeroCB() == null || utilisateur.getNumeroCB().isBlank()) {
             Label label = new Label("Aucune carte enregistrée.");
             Button allerCompteBtn = new Button("Ajouter une carte bancaire");
@@ -339,6 +351,7 @@ public class ReservationController {
         // Le formulaire vient du FXML : on le met dans paiementBox
         paiementBox.getChildren().setAll(carteFormBox);
         carteFormBox.setVisible(true);
+        carteFormBox.setManaged(true);
     }
 
 

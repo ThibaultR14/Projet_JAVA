@@ -64,6 +64,7 @@
 
                     <Button fx:id="submitButton" text="Publier"
                             styleClass="button-success"
+                            onAction="#onSubmit"
                             prefWidth="180"
                             alignment="CENTER"/>
                 </VBox>

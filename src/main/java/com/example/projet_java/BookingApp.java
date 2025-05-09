@@ -21,8 +21,9 @@ public class BookingApp extends Application {
             scene.getStylesheets().add(getClass().getResource("/com/example/projet_java/style.css").toExternalForm());
             primaryStage.setTitle("Page d'Accueil");
             primaryStage.setScene(scene);
-            primaryStage.setWidth(800);
+            primaryStage.setWidth(1000);
             primaryStage.setHeight(600);
+
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();

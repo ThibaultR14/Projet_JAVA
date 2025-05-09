@@ -8,11 +8,11 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
 import com.example.JAVAdao.HebergementDAO;
 import com.example.JAVAdao.TarifDAO;
 import com.example.JAVAmodel.Hebergement;
 import com.example.JAVAmodel.Tarif;
+import com.example.projet_java.Session;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,8 +77,8 @@ public class AjoutHebergementController {
             int capaciteMin = Integer.parseInt(capaciteMinField.getText());
             int capaciteMax = Integer.parseInt(capaciteMaxField.getText());
             int nbEtoile = Integer.parseInt(etoilesField.getText());
-            String ville = villeField.getText();
-            String codePostal = codePostalField.getText();
+            String ville = villeField.getText(); // non utilisé ici
+            String codePostal = codePostalField.getText(); // non utilisé ici
             LocalDate dateOuverture = dateOuverturePicker.getValue();
             LocalDate dateFermeture = dateFermeturePicker.getValue();
 
@@ -87,11 +87,10 @@ public class AjoutHebergementController {
             int prixEnfant = Integer.parseInt(prixEnfantField.getText());
             int prixVIP = Integer.parseInt(prixVIPField.getText());
 
-            // Création du tarif et récupération de l'ID généré
             Tarif tarif = new Tarif(prixAdulte, prixEnfant, prixVIP);
             int idTarif = TarifDAO.ajouterEtRetournerId(tarif);
 
-            // Gestion de l'image (copie vers /images + récupération du nom de fichier)
+            // Image
             String cheminFinal = "";
             if (selectedImageFile != null) {
                 File destination = new File("src/main/resources/images/" + selectedImageFile.getName());
@@ -99,8 +98,11 @@ public class AjoutHebergementController {
                 cheminFinal = selectedImageFile.getName();
             }
 
-            // ⚠️ Ville en dur pour l'instant (à améliorer)
+            // Ville en dur (à améliorer dans le futur)
             int idVille = 1;
+
+            // Récupération de l'utilisateur connecté
+            int idUser = Session.getUtilisateur().getIdUser();
 
             // Création de l'hébergement
             Hebergement h = new Hebergement(
@@ -109,16 +111,14 @@ public class AjoutHebergementController {
                     cheminFinal, idTarif, idVille,
                     dateOuverture, dateFermeture
             );
+            h.setIdUser(idUser); // ✅ Lier à l'utilisateur connecté
 
             new HebergementDAO().ajouterHebergement(h);
 
-            // Afficher confirmation
             showConfirmation("Hébergement publié avec succès !");
-
-            // Réinitialiser les champs
             clearFields();
 
-            // Rediriger vers la page d'accueil
+            // Redirection
             Stage stage = (Stage) nomField.getScene().getWindow();
             com.example.projet_java.SceneSwitcher.switchScene(stage, "/com/example/projet_java/accueil.fxml", "Accueil");
 
@@ -127,7 +127,6 @@ public class AjoutHebergementController {
             e.printStackTrace();
         }
     }
-
 
     private void copyFile(File source, File destination) throws IOException {
         try (FileInputStream in = new FileInputStream(source);

@@ -1,6 +1,7 @@
 package com.example.JAVAdao;
 
 import com.example.JAVAmodel.Hebergement;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,22 +29,7 @@ public class HebergementDAO {
     }
 
     public static List<Hebergement> findAll() {
-        List<Hebergement> hebergements = new ArrayList<>();
-        String query = "SELECT * FROM Hebergement";
-
-        try (Connection conn = connexionbdd.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                hebergements.add(mapHebergement(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return hebergements;
+        return getTousLesHebergements();
     }
 
     public static List<Hebergement> findByCriteria(String ville, Integer nbAdultes, Integer nbEnfants,
@@ -52,7 +38,7 @@ public class HebergementDAO {
         StringBuilder sql = new StringBuilder("""
         SELECT h.* FROM Hebergement h
         JOIN Ville v ON h.idVille = v.idVille
-        WHERE 1 = 1
+        WHERE h.reserve = FALSE
     """);
 
         List<Object> params = new ArrayList<>();
@@ -87,21 +73,7 @@ public class HebergementDAO {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Hebergement h = new Hebergement(
-                        rs.getInt("idHebergement"),
-                        rs.getString("nom"),
-                        rs.getString("adresse"),
-                        rs.getInt("nbEtoile"),
-                        rs.getInt("capaciteMin"),
-                        rs.getInt("capaciteMax"),
-                        rs.getString("photo"),
-                        rs.getInt("idTarif"),
-                        rs.getInt("idType"),
-                        rs.getInt("idVille"),
-                        rs.getDate("dateOuverture") != null ? rs.getDate("dateOuverture").toLocalDate() : null,
-                        rs.getDate("dateFermeture") != null ? rs.getDate("dateFermeture").toLocalDate() : null
-                );
-                hebergements.add(h);
+                hebergements.add(mapHebergement(rs));
             }
 
         } catch (SQLException e) {
@@ -111,12 +83,11 @@ public class HebergementDAO {
         return hebergements;
     }
 
-
     public static boolean insert(Hebergement h) {
         String query = """
             INSERT INTO Hebergement
-            (nom, adresse, nbEtoile, capaciteMin, capaciteMax, photo, idTarif, idType, idVille, dateOuverture, dateFermeture)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (nom, adresse, nbEtoile, capaciteMin, capaciteMax, photo, idTarif, idType, idVille, dateOuverture, dateFermeture, reserve)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = connexionbdd.getConnection();
@@ -133,6 +104,7 @@ public class HebergementDAO {
             stmt.setInt(9, h.getIdVille());
             stmt.setDate(10, h.getDateOuverture() != null ? Date.valueOf(h.getDateOuverture()) : null);
             stmt.setDate(11, h.getDateFermeture() != null ? Date.valueOf(h.getDateFermeture()) : null);
+            stmt.setBoolean(12, h.isReserve());
 
             stmt.executeUpdate();
             return true;
@@ -150,8 +122,7 @@ public class HebergementDAO {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, idHebergement);
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+            return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,7 +130,21 @@ public class HebergementDAO {
         }
     }
 
-    // ✅ Méthode utilitaire commune pour créer un Hebergement à partir du ResultSet
+    public static boolean marquerCommeReserve(int idHebergement) {
+        String query = "UPDATE Hebergement SET reserve = TRUE WHERE idHebergement = ?";
+
+        try (Connection conn = connexionbdd.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, idHebergement);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private static Hebergement mapHebergement(ResultSet rs) throws SQLException {
         return new Hebergement(
                 rs.getInt("idHebergement"),
@@ -173,13 +158,17 @@ public class HebergementDAO {
                 rs.getInt("idType"),
                 rs.getInt("idVille"),
                 rs.getDate("dateOuverture") != null ? rs.getDate("dateOuverture").toLocalDate() : null,
-                rs.getDate("dateFermeture") != null ? rs.getDate("dateFermeture").toLocalDate() : null
+                rs.getDate("dateFermeture") != null ? rs.getDate("dateFermeture").toLocalDate() : null,
+                rs.getBoolean("reserve") // 🆕 champ ajouté ici
         );
     }
 
     public void ajouterHebergement(Hebergement h) throws SQLException {
-        String sql = "INSERT INTO Hebergement (nom, adresse, capaciteMin, capaciteMax, nbEtoile, photo, idTarif, dateOuverture, dateFermeture, idVille) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = """
+        INSERT INTO Hebergement 
+        (nom, adresse, capaciteMin, capaciteMax, nbEtoile, photo, idTarif, dateOuverture, dateFermeture, idVille, reserve, idUser)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """;
 
         try (Connection conn = connexionbdd.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -190,13 +179,99 @@ public class HebergementDAO {
             stmt.setInt(4, h.getCapaciteMax());
             stmt.setInt(5, h.getNbEtoile());
             stmt.setString(6, h.getPhoto());
-            stmt.setInt(7, h.getIdTarif());  // ✅ manquant dans ton code
-            stmt.setDate(8, (h.getDateOuverture() != null) ? Date.valueOf(h.getDateOuverture()) : null);
-            stmt.setDate(9, (h.getDateFermeture() != null) ? Date.valueOf(h.getDateFermeture()) : null);
+            stmt.setInt(7, h.getIdTarif());
+            stmt.setDate(8, h.getDateOuverture() != null ? Date.valueOf(h.getDateOuverture()) : null);
+            stmt.setDate(9, h.getDateFermeture() != null ? Date.valueOf(h.getDateFermeture()) : null);
             stmt.setInt(10, h.getIdVille());
-
+            stmt.setBoolean(11, h.isReserve());
+            stmt.setInt(12, h.getIdUser()); // ✅ CORRECTION ICI
             stmt.executeUpdate();
         }
+    }
+
+
+    public static Hebergement getHebergementById(int id) {
+        String sql = "SELECT * FROM Hebergement WHERE idHebergement = ?";
+
+        try (Connection conn = connexionbdd.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Hebergement(
+                        rs.getInt("idHebergement"),
+                        rs.getString("nom"),
+                        rs.getString("adresse"),
+                        rs.getInt("nbEtoile"),
+                        rs.getInt("capaciteMin"),
+                        rs.getInt("capaciteMax"),
+                        rs.getString("photo"),
+                        rs.getInt("idTarif"),
+                        rs.getInt("idType"),
+                        rs.getInt("idVille"),
+                        rs.getDate("dateOuverture") != null ? rs.getDate("dateOuverture").toLocalDate() : null,
+                        rs.getDate("dateFermeture") != null ? rs.getDate("dateFermeture").toLocalDate() : null,
+                        rs.getBoolean("reserve")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static boolean marquerCommeNonReserve(int idHebergement) {
+        String query = "UPDATE Hebergement SET reserve = FALSE WHERE idHebergement = ?";
+
+        try (Connection conn = connexionbdd.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, idHebergement);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static List<Hebergement> getHebergementsByUserId(int idUser) {
+        List<Hebergement> list = new ArrayList<>();
+        String sql = "SELECT * FROM Hebergement WHERE idUser = ?";
+
+        try (Connection conn = connexionbdd.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idUser);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Hebergement(
+                        rs.getInt("idHebergement"),
+                        rs.getString("nom"),
+                        rs.getString("adresse"),
+                        rs.getInt("nbEtoile"),
+                        rs.getInt("capaciteMin"),
+                        rs.getInt("capaciteMax"),
+                        rs.getString("photo"),
+                        rs.getInt("idTarif"),
+                        rs.getInt("idType"),
+                        rs.getInt("idVille"),
+                        rs.getDate("dateOuverture") != null ? rs.getDate("dateOuverture").toLocalDate() : null,
+                        rs.getDate("dateFermeture") != null ? rs.getDate("dateFermeture").toLocalDate() : null,
+                        rs.getBoolean("reserve"),
+                        rs.getInt("idUser")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
 

@@ -14,57 +14,65 @@
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="main-scroll">
             <content>
-                <VBox alignment="TOP_CENTER" spacing="25" styleClass="card">
+                <VBox alignment="TOP_CENTER" spacing="30" >
                     <padding>
-                        <Insets top="30" right="30" bottom="30" left="30"/>
+                        <Insets top="40" right="40" bottom="40" left="40"/>
                     </padding>
 
-                    <Label text="Réserver cet hébergement" styleClass="title-label"/>
-                    <Label fx:id="hebergementNomLabel" styleClass="title-label"/>
+                    <Label text="Réserver cet hébergement" styleClass="page-title"/>
+                    <Label fx:id="hebergementNomLabel" styleClass="subtitle-label"/>
+                    <Label fx:id="etoilesLabel" styleClass="etoiles-label"/>
 
-                    <!-- Dates de séjour -->
-                    <HBox spacing="20" alignment="CENTER_LEFT">
-                        <VBox spacing="5">
-                            <Label text="Date d'arrivée" styleClass="text-dark"/>
-                            <DatePicker fx:id="dateArriveePicker" styleClass="date-picker"/>
-                        </VBox>
-                        <VBox spacing="5">
-                            <Label text="Date de départ" styleClass="text-dark"/>
-                            <DatePicker fx:id="dateDepartPicker" styleClass="date-picker"/>
-                        </VBox>
-                        <VBox spacing="5">
-                            <Label text="Disponibilité" styleClass="text-dark"/>
-                            <Label fx:id="datesLabel" text="(Ouvert du ... au ...)" styleClass="text-muted"/>
-                        </VBox>
-                    </HBox>
 
-                    <!-- Nombre de personnes -->
-                    <HBox spacing="20" alignment="CENTER_LEFT">
-                        <VBox spacing="5">
-                            <Label text="Adultes" styleClass="text-dark"/>
-                            <Spinner fx:id="nbAdultesSpinner"/>
-                        </VBox>
-                        <VBox spacing="5">
-                            <Label text="Enfants" styleClass="text-dark"/>
-                            <Spinner fx:id="nbEnfantsSpinner"/>
-                        </VBox>
-                        <VBox spacing="5">
-                            <Label text="Capacité" styleClass="text-dark"/>
-                            <Label fx:id="capaciteLabel" text="(Capacité : X à Y)" styleClass="text-muted"/>
-                        </VBox>
-                    </HBox>
+                    <!-- Bloc Dates -->
+                    <VBox spacing="10" styleClass="reservation-section">
+                        <Label text="Dates de séjour" styleClass="section-title"/>
+                        <HBox spacing="30" alignment="CENTER_LEFT">
+                            <VBox spacing="5">
+                                <Label text="Date d'arrivée" styleClass="text-dark"/>
+                                <DatePicker fx:id="dateArriveePicker" styleClass="date-picker"/>
+                            </VBox>
+                            <VBox spacing="5">
+                                <Label text="Date de départ" styleClass="text-dark"/>
+                                <DatePicker fx:id="dateDepartPicker" styleClass="date-picker"/>
+                            </VBox>
+                            <VBox spacing="5">
+                                <Label text="Disponibilité" styleClass="text-dark"/>
+                                <Label fx:id="datesLabel" text="(Ouvert du ... au ...)" styleClass="text-muted"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
 
-                    <!-- Estimation -->
-                    <Label fx:id="tarifEstimeLabel" styleClass="text-dark"/>
+                    <!-- Bloc Personnes -->
+                    <VBox spacing="10" styleClass="reservation-section">
+                        <Label text="Nombre de personnes" styleClass="section-title"/>
+                        <HBox spacing="30" alignment="CENTER_LEFT">
+                            <VBox spacing="5">
+                                <Label text="Adultes" styleClass="text-dark"/>
+                                <Spinner fx:id="nbAdultesSpinner"/>
+                            </VBox>
+                            <VBox spacing="5">
+                                <Label text="Enfants" styleClass="text-dark"/>
+                                <Spinner fx:id="nbEnfantsSpinner"/>
+                            </VBox>
+                            <VBox spacing="5">
+                                <Label text="Capacité" styleClass="text-dark"/>
+                                <Label fx:id="capaciteLabel" text="(Capacité : X à Y)" styleClass="text-muted"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
 
-                    <!-- Paiement -->
-                    <VBox fx:id="paiementBox" spacing="10" alignment="CENTER_LEFT"/>
+                    <!-- Tarif estimé -->
+                    <Label fx:id="tarifEstimeLabel" styleClass="tarif-estime"/>
 
-                    <!-- Formulaire ajout carte -->
-                    <VBox fx:id="carteFormBox" spacing="10" alignment="CENTER_LEFT" visible="false">
-                        <Label text="Ajouter une carte bancaire" styleClass="text-dark"/>
+                    <!-- Bloc Paiement -->
+                    <VBox fx:id="paiementBox" spacing="15" alignment="CENTER_LEFT" styleClass="reservation-section"/>
+
+                    <!-- Formulaire carte -->
+                    <VBox fx:id="carteFormBox" spacing="10" alignment="CENTER_LEFT" visible="false" styleClass="reservation-section">
+                        <Label text="Ajouter une carte bancaire" styleClass="section-title"/>
                         <TextField fx:id="typeCarteField" promptText="Type de carte (Visa, Mastercard...)"/>
                         <TextField fx:id="numeroCBField" promptText="Numéro de carte"/>
                         <TextField fx:id="cryptoField" promptText="Cryptogramme (3 chiffres)"/>
@@ -76,7 +84,7 @@
                     </VBox>
 
                     <!-- Boutons -->
-                    <HBox spacing="20">
+                    <HBox spacing="25" alignment="CENTER">
                         <Button text="Retour à la fiche de l'hébergement"
                                 styleClass="button-secondary"
                                 onAction="#onRetourFicheHebergementClicked"/>
