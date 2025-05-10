@@ -115,6 +115,13 @@ Un grand merci à tous les membres de l’équipe pour leur implication, leur ri
 
 Nous remercions également **M. Baret** pour sa disponibilité et son accompagnement, toujours présent pour nous guider lorsque nous rencontrions des difficultés techniques ou méthodologiques.
 
+---
+### 📬 Contact
+
+En cas de problème avec le lancement de l'application ou pour toute question concernant le projet, vous pouvez contacter l'équipe :
+
+- **Thibault Rabbé** – [thibault.rabbe@edu.ece.fr](mailto:thibault.rabbe@edu.ece.fr)
+
 > Projet réalisé dans le cadre de notre cursus d'ingénieur.
 
 ---
