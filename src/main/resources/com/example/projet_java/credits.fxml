@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.CreditsController" styleClass="root">
+    <top>
+        <fx:include source="header.fxml"/>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20" styleClass="profil-card">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+
+            <Label text="Crédits du projet" styleClass="title-label"/>
+
+            <Label text="Ce site a été développé dans le cadre d'un projet universitaire en Java et avec l'utilisation de javaFx."
+                   wrapText="true" maxWidth="600" styleClass="text-dark"/>
+
+            <Label text="Il s'agit d'une simulation de plateforme de réservation de logements inspirée de Booking."
+                   wrapText="true" maxWidth="600" styleClass="text-dark"/>
+
+            <Label text="Développé par :" styleClass="section-title"/>
+            <VBox spacing="8">
+                <Label text="• Thibault Rabbé" styleClass="text-dark"/>
+                <Label text="• Thomas Prigent" styleClass="text-dark"/>
+                <Label text="• Antoine Coatmeur" styleClass="text-dark"/>
+                <Label text="• Arnaud Pechier" styleClass="text-dark"/>
+            </VBox>
+
+            <Label text="Projet réalisé en 2025 - Tous droits réservés" styleClass="text-muted"/>
+
+        </VBox>
+    </center>
+
+    <bottom>
+        <fx:include source="footer.fxml"/>
+    </bottom>
+</BorderPane>

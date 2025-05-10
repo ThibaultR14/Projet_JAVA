@@ -7,7 +7,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.JAVAcontroller.ReservationController"
-            styleClass="root">
+            styleClass="root2">
 
     <top>
         <fx:include source="header.fxml"/>
@@ -64,8 +64,20 @@
                         </HBox>
                     </VBox>
 
-                    <!-- Tarif estimé -->
-                    <Label fx:id="tarifEstimeLabel" styleClass="tarif-estime"/>
+                    <!-- Tarif estimé + promo -->
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Label fx:id="tarifEstimeLabel" styleClass="tarif-estime"/>
+
+                        <TextField fx:id="promoCodeField"
+                                   promptText="Code promo"
+                                   prefWidth="120"
+                                   styleClass="text-field"/>
+
+                        <Button text="Appliquer"
+                                onAction="#onAppliquerPromoClicked"
+                                styleClass="button-secondary"/>
+                    </HBox>
+
 
                     <!-- Bloc Paiement -->
                     <VBox fx:id="paiementBox" spacing="15" alignment="CENTER_LEFT" styleClass="reservation-section"/>

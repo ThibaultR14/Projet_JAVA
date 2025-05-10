@@ -6,7 +6,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.JAVAcontroller.AccueilController"
-            styleClass="root">
+            styleClass="accueilr">
 
     <top>
         <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header-bar">
@@ -49,7 +49,7 @@
                 <Insets top="50" right="50" bottom="50" left="50"/>
             </padding>
 
-            <Label text="Trouvez votre hébergement idéal" styleClass="title-label"/>
+            <Label text="Trouvez votre hébergement idéal" styleClass="title-accueil"/>
 
             <TextField fx:id="villeField"
                        promptText="Où allez-vous ?"
@@ -70,11 +70,7 @@
 
     <!-- Footer -->
     <bottom>
-        <HBox alignment="CENTER" styleClass="footer-bar">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <Label text="© 2025 - NotBooking"/>
-        </HBox>
+        <fx:include source="footer.fxml"/>
+
     </bottom>
 </BorderPane>

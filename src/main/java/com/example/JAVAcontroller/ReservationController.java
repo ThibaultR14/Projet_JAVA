@@ -12,12 +12,7 @@ import com.example.projet_java.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.geometry.Pos;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -37,6 +32,9 @@ public class ReservationController {
     @FXML private Button reserverButton;
     @FXML private Label tarifEstimeLabel;
     @FXML private Label etoilesLabel;
+
+    @FXML private TextField promoCodeField;
+    private int pourcentageReduction = 0;
 
 
     @FXML private VBox carteFormBox;
@@ -136,8 +134,13 @@ public class ReservationController {
         int nbE = nbEnfantsSpinner.getValue();
         int total = nbA * prixAdulte + nbE * prixEnfant;
 
+        if (pourcentageReduction > 0) {
+            total -= total * pourcentageReduction / 100;
+        }
+
         tarifEstimeLabel.setText("Tarif estimé : " + total + "€");
     }
+
 
 
     private void ajusterEnfants() {
@@ -398,6 +401,27 @@ public class ReservationController {
         showConfirmation("Carte enregistrée !");
         afficherPaiement();  // Recharge les infos
     }
+
+    @FXML
+    public void onAppliquerPromoClicked() {
+        String code = promoCodeField.getText();
+        if (code == null || code.isBlank()) return;
+
+        var utilisateur = Session.getUtilisateur();
+        var reduction = com.example.JAVAdao.ReductionDAO.getReductionByCodeAndUser(code.trim(), utilisateur.getIdUser());
+
+        if (reduction == null) {
+            showError("Code invalide ou non attribué à votre compte.");
+            pourcentageReduction = 0;
+        } else {
+            pourcentageReduction = reduction.getPourcentage();
+            showConfirmation("Code appliqué : -" + pourcentageReduction + "%");
+        }
+
+        calculerPrix();
+    }
+
+
 
 
 

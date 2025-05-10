@@ -10,8 +10,10 @@ import javafx.stage.Stage;
 
 import com.example.JAVAdao.HebergementDAO;
 import com.example.JAVAdao.TarifDAO;
+import com.example.JAVAdao.VilleDAO;
 import com.example.JAVAmodel.Hebergement;
 import com.example.JAVAmodel.Tarif;
+import com.example.JAVAmodel.Ville;
 import com.example.projet_java.Session;
 
 import java.io.File;
@@ -19,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class AjoutHebergementController {
 
@@ -28,8 +31,7 @@ public class AjoutHebergementController {
     @FXML private TextField capaciteMinField;
     @FXML private TextField capaciteMaxField;
     @FXML private TextField etoilesField;
-    @FXML private TextField villeField;
-    @FXML private TextField codePostalField;
+    @FXML private ComboBox<Ville> villeCombo;
     @FXML private DatePicker dateOuverturePicker;
     @FXML private DatePicker dateFermeturePicker;
 
@@ -47,6 +49,12 @@ public class AjoutHebergementController {
 
     @FXML
     public void initialize() {
+        // Chargement des villes
+        List<Ville> villes = VilleDAO.getToutesLesVilles();
+        villeCombo.getItems().addAll(villes);
+        if (!villes.isEmpty()) villeCombo.getSelectionModel().selectFirst();
+
+        // Drag & drop image
         dropZone.setOnDragOver(event -> {
             if (event.getGestureSource() != dropZone && event.getDragboard().hasFiles()) {
                 event.acceptTransferModes(TransferMode.COPY);
@@ -71,18 +79,20 @@ public class AjoutHebergementController {
     @FXML
     public void onSubmit() {
         try {
-            // Lecture des champs de formulaire
             String nom = nomField.getText();
             String adresse = adresseField.getText();
             int capaciteMin = Integer.parseInt(capaciteMinField.getText());
             int capaciteMax = Integer.parseInt(capaciteMaxField.getText());
             int nbEtoile = Integer.parseInt(etoilesField.getText());
-            String ville = villeField.getText(); // non utilisé ici
-            String codePostal = codePostalField.getText(); // non utilisé ici
             LocalDate dateOuverture = dateOuverturePicker.getValue();
             LocalDate dateFermeture = dateFermeturePicker.getValue();
 
-            // Tarifs
+            Ville ville = villeCombo.getValue();
+            if (ville == null) {
+                showError("Veuillez sélectionner une ville.");
+                return;
+            }
+
             int prixAdulte = Integer.parseInt(prixAdulteField.getText());
             int prixEnfant = Integer.parseInt(prixEnfantField.getText());
             int prixVIP = Integer.parseInt(prixVIPField.getText());
@@ -90,7 +100,6 @@ public class AjoutHebergementController {
             Tarif tarif = new Tarif(prixAdulte, prixEnfant, prixVIP);
             int idTarif = TarifDAO.ajouterEtRetournerId(tarif);
 
-            // Image
             String cheminFinal = "";
             if (selectedImageFile != null) {
                 File destination = new File("src/main/resources/images/" + selectedImageFile.getName());
@@ -98,27 +107,21 @@ public class AjoutHebergementController {
                 cheminFinal = selectedImageFile.getName();
             }
 
-            // Ville en dur (à améliorer dans le futur)
-            int idVille = 1;
-
-            // Récupération de l'utilisateur connecté
             int idUser = Session.getUtilisateur().getIdUser();
 
-            // Création de l'hébergement
             Hebergement h = new Hebergement(
                     nom, adresse, nbEtoile,
                     capaciteMin, capaciteMax,
-                    cheminFinal, idTarif, idVille,
+                    cheminFinal, idTarif, ville.getIdVille(),
                     dateOuverture, dateFermeture
             );
-            h.setIdUser(idUser); // ✅ Lier à l'utilisateur connecté
+            h.setIdUser(idUser);
 
             new HebergementDAO().ajouterHebergement(h);
 
             showConfirmation("Hébergement publié avec succès !");
             clearFields();
 
-            // Redirection
             Stage stage = (Stage) nomField.getScene().getWindow();
             com.example.projet_java.SceneSwitcher.switchScene(stage, "/com/example/projet_java/accueil.fxml", "Accueil");
 
@@ -161,8 +164,7 @@ public class AjoutHebergementController {
         capaciteMinField.clear();
         capaciteMaxField.clear();
         etoilesField.clear();
-        villeField.clear();
-        codePostalField.clear();
+        villeCombo.getSelectionModel().clearSelection();
         dateOuverturePicker.setValue(null);
         dateFermeturePicker.setValue(null);
         prixAdulteField.clear();

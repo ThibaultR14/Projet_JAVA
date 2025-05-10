@@ -9,7 +9,7 @@
       fx:controller="com.example.JAVAcontroller.AjoutHebergementController"
       spacing="20"
       alignment="TOP_CENTER"
-      styleClass="root">
+      styleClass="root2">
 
     <!-- Header -->
     <fx:include source="header.fxml"/>
@@ -39,8 +39,8 @@
                     </HBox>
 
                     <TextField fx:id="etoilesField" promptText="Nombre d'étoiles (1 à 5)" prefWidth="400"/>
-                    <TextField fx:id="villeField" promptText="Ville" prefWidth="400"/>
-                    <TextField fx:id="codePostalField" promptText="Code postal" prefWidth="400"/>
+                    <ComboBox fx:id="villeCombo" promptText="Choisissez une ville" prefWidth="400"/>
+
 
                     <HBox spacing="10">
                         <DatePicker fx:id="dateOuverturePicker" promptText="Date d'ouverture" prefWidth="195"/>

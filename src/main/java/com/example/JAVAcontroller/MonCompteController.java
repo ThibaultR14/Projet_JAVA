@@ -1,5 +1,6 @@
 package com.example.JAVAcontroller;
 
+import com.example.JAVAdao.ReductionDAO;
 import com.example.projet_java.SceneSwitcher;
 import com.example.projet_java.Session;
 import com.example.JAVAdao.UtilisateurDAO;
@@ -22,7 +23,7 @@ public class MonCompteController {
 
     @FXML private VBox paiementBox;
     @FXML private VBox reductionBox;
-
+    @FXML private Button adminButton;
 
     private TextField typeCarteField;
     private TextField numeroCBField;
@@ -48,6 +49,14 @@ public class MonCompteController {
             afficherPaiement(u);
             afficherReductions(u);
 
+            // ✅ Afficher le bouton admin uniquement si isAdmin
+            if (u.isAdmin()) {
+                adminButton.setVisible(true);
+                adminButton.setManaged(true);
+            } else {
+                adminButton.setVisible(false);
+                adminButton.setManaged(false);
+            }
         }
     }
 
@@ -91,7 +100,6 @@ public class MonCompteController {
             enregistrerCarteButton.setVisible(false);
             enregistrerCarteButton.setOnAction(e -> enregistrerCarte(u));
 
-            // ✅ Bouton supprimer la carte
             Button supprimerCarteButton = new Button("Supprimer la carte");
             supprimerCarteButton.getStyleClass().add("button-logout");
             supprimerCarteButton.setOnAction(e -> {
@@ -100,13 +108,12 @@ public class MonCompteController {
                 u.setExpiration(null);
                 u.setTypeCarte(null);
                 UtilisateurDAO.mettreAJourCarte(u);
-                afficherPaiement(u); // Rechargement
+                afficherPaiement(u);
             });
 
             paiementBox.getChildren().addAll(carteInfos, modifierCarteButton, enregistrerCarteButton, supprimerCarteButton);
         }
     }
-
 
     private void activerEditionCarte(Utilisateur u, boolean isAjout) {
         if (isAjout) {
@@ -205,23 +212,31 @@ public class MonCompteController {
         );
     }
 
+    @FXML
+    public void onAdminDashboardClicked() {
+        SceneSwitcher.switchScene(
+                (Stage) adminButton.getScene().getWindow(),
+                "/com/example/projet_java/adminbienvenue.fxml",
+                "Tableau de bord Admin"
+        );
+    }
+
     private void afficherReductions(Utilisateur u) {
         if (reductionBox == null) return;
 
         reductionBox.getChildren().clear();
 
-        var liste = com.example.JAVAdao.ReductionDAO.getReductionsParUtilisateur(u.getIdUser());
+        var liste = ReductionDAO.getReductionsParUtilisateur(u.getIdUser());
         if (liste.isEmpty()) {
             Label aucune = new Label("Aucune réduction disponible.");
             aucune.getStyleClass().add("text-dark");
             reductionBox.getChildren().add(aucune);
         } else {
             for (var red : liste) {
-                Label label = new Label(  red.getCode() + " (" + red.getPourcentage() + "%)");
+                Label label = new Label(red.getCode() + " (" + red.getPourcentage() + "%)");
                 label.getStyleClass().add("text-reduction");
                 reductionBox.getChildren().add(label);
             }
         }
     }
-
 }

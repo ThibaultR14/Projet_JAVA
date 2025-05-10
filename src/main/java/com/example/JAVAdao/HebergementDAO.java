@@ -33,7 +33,7 @@ public class HebergementDAO {
     }
 
     public static List<Hebergement> findByCriteria(String ville, Integer nbAdultes, Integer nbEnfants,
-                                                   LocalDate dateArrivee, LocalDate dateDepart) {
+                                                        LocalDate dateArrivee, LocalDate dateDepart) {
         List<Hebergement> hebergements = new ArrayList<>();
         StringBuilder sql = new StringBuilder("""
         SELECT h.* FROM Hebergement h

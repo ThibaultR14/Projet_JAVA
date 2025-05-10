@@ -6,14 +6,15 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.JAVAcontroller.MonCompteController"
-            styleClass="root">
+            styleClass="root2">
 
     <top>
         <fx:include source="header.fxml"/>
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    styleClass="main-scroll" style="-fx-background-color: transparent;">
             <content>
                 <VBox spacing="25" alignment="CENTER">
                     <padding><Insets top="40" bottom="40" left="50" right="50"/></padding>
@@ -35,8 +36,17 @@
 
                             <Label text="Statut :" styleClass="text-dark" GridPane.rowIndex="2"/>
                             <Label fx:id="roleLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+
                         </GridPane>
                         <HBox spacing="15" >
+
+                            <Button fx:id="adminButton"
+                                    text="Tableau de bord admin"
+                                    styleClass="button-secondary"
+                                    onAction="#onAdminDashboardClicked"
+                                    visible="false"
+                                    managed="false"/>
 
                         <Button fx:id="modifierButton" text="Modifier" onAction="#onModifierClicked" styleClass="button-primary"/>
                         <Button fx:id="validerButton" text="Enregistrer" onAction="#onValiderClicked" styleClass="button-success" visible="false"/>

@@ -7,7 +7,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.JAVAcontroller.MesReservationsController"
-            styleClass="root">
+            styleClass="root2">
 
     <!-- Header réutilisable -->
     <top>

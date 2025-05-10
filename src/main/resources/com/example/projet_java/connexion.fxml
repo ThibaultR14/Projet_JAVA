@@ -7,7 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Pos?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.UtilisateurController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.UtilisateurController" styleClass="root2">
 
     <!-- Header -->
     <top>
