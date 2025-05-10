@@ -27,4 +27,29 @@ public class TarifDAO {
         }
         return null;
     }
+
+    public static int ajouterEtRetournerId(Tarif tarif) {
+        int id = -1;
+        String sql = "INSERT INTO Tarif (prixAdulte, prixEnfant, prixVIP) VALUES (?, ?, ?)";
+
+        try (Connection conn = connexionbdd.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, tarif.getPrixAdulte());
+            stmt.setInt(2, tarif.getPrixEnfant());
+            stmt.setInt(3, tarif.getPrixVIP());
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
 }

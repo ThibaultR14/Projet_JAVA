@@ -13,6 +13,13 @@ public class Tarif {
         this.prixVIP = prixVIP;
     }
 
+    public Tarif(int prixAdulte, int prixEnfant, int prixVIP) {
+        this.prixAdulte = prixAdulte;
+        this.prixEnfant = prixEnfant;
+        this.prixVIP = prixVIP;
+    }
+
+
     // Getters
     public int getIdTarif() { return idTarif; }
     public int getPrixAdulte() { return prixAdulte; }

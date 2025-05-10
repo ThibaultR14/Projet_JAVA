@@ -4,51 +4,73 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.AccueilController"
-            styleClass="root">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.JAVAcontroller.AccueilController"
+            styleClass="accueilr">
 
-    <!-- Barre en haut -->
     <top>
-        <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="header-bar">
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header-bar">
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets top="10" right="15" bottom="10" left="15"/>
             </padding>
+
+            <!-- Logo -->
             <Label text="NotBooking" styleClass="logo-label"/>
-            <Button text="Connexion" fx:id="connexionButton" onAction="#onConnexionClicked"
-                    styleClass="button-primary"/>
-            <Button text="Inscription" fx:id="inscriptionButton" onAction="#onInscriptionClicked"
-                    styleClass="button-success"/>
+
+            <!-- Espace extensible -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- HBox pour les boutons connectés -->
+            <HBox fx:id="headerBar" spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Connexion"
+                        fx:id="connexionButton"
+                        onAction="#onConnexionClicked"
+                        styleClass="button-primary"/>
+
+                <Button text="Inscription"
+                        fx:id="inscriptionButton"
+                        onAction="#onInscriptionClicked"
+                        styleClass="button-success"/>
+
+                <Button text="Ajouter un hébergement"
+                        fx:id="uploadButton"
+                        onAction="#onUploadClicked"
+                        styleClass="button-secondary"
+                />
+            </HBox>
         </HBox>
     </top>
 
-    <!-- Centre de la page -->
+
+    <!-- Centre -->
     <center>
         <VBox spacing="20" alignment="CENTER">
             <padding>
                 <Insets top="50" right="50" bottom="50" left="50"/>
             </padding>
-            <Label text="Trouvez votre hébergement idéal" styleClass="title-label"/>
-            <TextField fx:id="villeField" promptText="Où allez-vous ?" prefWidth="300"
+
+            <Label text="Trouvez votre hébergement idéal" styleClass="title-accueil"/>
+
+            <TextField fx:id="villeField"
+                       promptText="Où allez-vous ?"
+                       prefWidth="300"
                        styleClass="text-field"/>
+
             <HBox spacing="15" alignment="CENTER">
-                <DatePicker fx:id="dateArriveePicker" promptText="Date d'arrivée"
-                            styleClass="date-picker"/>
-                <DatePicker fx:id="dateDepartPicker" promptText="Date de départ"
-                            styleClass="date-picker"/>
+                <DatePicker fx:id="dateArriveePicker" promptText="Date d'arrivée" styleClass="date-picker"/>
+                <DatePicker fx:id="dateDepartPicker" promptText="Date de départ" styleClass="date-picker"/>
             </HBox>
-            <Button text="Rechercher" fx:id="rechercherButton" onAction="#onRechercherClicked"
+
+            <Button text="Rechercher"
+                    fx:id="rechercherButton"
+                    onAction="#onRechercherClicked"
                     styleClass="button-primary"/>
         </VBox>
     </center>
 
     <!-- Footer -->
     <bottom>
-        <HBox alignment="CENTER" styleClass="footer-bar">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <Label text="© 2025 - NotBooking"/>
-        </HBox>
-    </bottom>
+        <fx:include source="footer.fxml"/>
 
+    </bottom>
 </BorderPane>

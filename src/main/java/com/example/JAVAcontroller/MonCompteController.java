@@ -1,11 +1,13 @@
 package com.example.JAVAcontroller;
 
+import com.example.JAVAdao.ReductionDAO;
 import com.example.projet_java.SceneSwitcher;
 import com.example.projet_java.Session;
 import com.example.JAVAdao.UtilisateurDAO;
 import com.example.JAVAmodel.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class MonCompteController {
@@ -19,6 +21,18 @@ public class MonCompteController {
     @FXML private Button modifierButton;
     @FXML private Button validerButton;
 
+    @FXML private VBox paiementBox;
+    @FXML private VBox reductionBox;
+    @FXML private Button adminButton;
+
+    private TextField typeCarteField;
+    private TextField numeroCBField;
+    private TextField cryptoField;
+    private DatePicker expirationPicker;
+
+    private Button modifierCarteButton;
+    private Button enregistrerCarteButton;
+
     @FXML
     public void initialize() {
         Utilisateur u = Session.getUtilisateur();
@@ -28,20 +42,132 @@ public class MonCompteController {
             passwordField.setText(u.getPassword());
             roleLabel.setText(u.isAdmin() ? "Administrateur" : "Client");
 
-            // Champs désactivés par défaut
             emailField.setEditable(false);
             passwordField.setEditable(false);
             validerButton.setVisible(false);
+
+            afficherPaiement(u);
+            afficherReductions(u);
+
+            // ✅ Afficher le bouton admin uniquement si isAdmin
+            if (u.isAdmin()) {
+                adminButton.setVisible(true);
+                adminButton.setManaged(true);
+            } else {
+                adminButton.setVisible(false);
+                adminButton.setManaged(false);
+            }
         }
     }
 
-    @FXML
-    public void onRetourAccueil() {
-        SceneSwitcher.switchScene(
-                (Stage) titreLabel.getScene().getWindow(),
-                "/com/example/projet_java/accueil.fxml",
-                "Accueil"
-        );
+    private void afficherPaiement(Utilisateur u) {
+        paiementBox.getChildren().clear();
+
+        if (u.getNumeroCB() == null || u.getNumeroCB().isBlank()) {
+            Button ajouterCarteBtn = new Button("Ajouter une carte bancaire");
+            ajouterCarteBtn.getStyleClass().add("button-primary");
+            ajouterCarteBtn.setOnAction(e -> activerEditionCarte(u, true));
+            paiementBox.getChildren().add(ajouterCarteBtn);
+        } else {
+            GridPane carteInfos = new GridPane();
+            carteInfos.setHgap(15);
+            carteInfos.setVgap(10);
+
+            String numMasque = "**** **** **** " + u.getNumeroCB().substring(u.getNumeroCB().length() - 4);
+            String cryptoMasque = "***";
+
+            typeCarteField = new TextField(u.getTypeCarte());
+            numeroCBField = new TextField(numMasque);
+            cryptoField = new TextField(cryptoMasque);
+            expirationPicker = new DatePicker(u.getExpiration());
+
+            typeCarteField.setEditable(false);
+            numeroCBField.setEditable(false);
+            cryptoField.setEditable(false);
+            expirationPicker.setDisable(true);
+
+            carteInfos.addRow(0, new Label("Type de carte :"), typeCarteField);
+            carteInfos.addRow(1, new Label("Numéro :"), numeroCBField);
+            carteInfos.addRow(2, new Label("Cryptogramme :"), cryptoField);
+            carteInfos.addRow(3, new Label("Expiration :"), expirationPicker);
+
+            modifierCarteButton = new Button("Modifier la carte");
+            modifierCarteButton.getStyleClass().add("button-secondary");
+            modifierCarteButton.setOnAction(e -> activerEditionCarte(u, false));
+
+            enregistrerCarteButton = new Button("Enregistrer les modifications");
+            enregistrerCarteButton.getStyleClass().add("button-success");
+            enregistrerCarteButton.setVisible(false);
+            enregistrerCarteButton.setOnAction(e -> enregistrerCarte(u));
+
+            Button supprimerCarteButton = new Button("Supprimer la carte");
+            supprimerCarteButton.getStyleClass().add("button-logout");
+            supprimerCarteButton.setOnAction(e -> {
+                u.setNumeroCB(null);
+                u.setCryptogramme(null);
+                u.setExpiration(null);
+                u.setTypeCarte(null);
+                UtilisateurDAO.mettreAJourCarte(u);
+                afficherPaiement(u);
+            });
+
+            paiementBox.getChildren().addAll(carteInfos, modifierCarteButton, enregistrerCarteButton, supprimerCarteButton);
+        }
+    }
+
+    private void activerEditionCarte(Utilisateur u, boolean isAjout) {
+        if (isAjout) {
+            typeCarteField = new TextField();
+            numeroCBField = new TextField();
+            cryptoField = new TextField();
+            expirationPicker = new DatePicker();
+
+            modifierCarteButton = new Button("Annuler");
+            modifierCarteButton.getStyleClass().add("button-secondary");
+            modifierCarteButton.setOnAction(ev -> afficherPaiement(u));
+
+            enregistrerCarteButton = new Button("Enregistrer");
+            enregistrerCarteButton.getStyleClass().add("button-success");
+            enregistrerCarteButton.setOnAction(ev -> enregistrerCarte(u));
+
+            paiementBox.getChildren().clear();
+            GridPane carteInfos = new GridPane();
+            carteInfos.setHgap(15);
+            carteInfos.setVgap(10);
+            carteInfos.addRow(0, new Label("Type de carte :"), typeCarteField);
+            carteInfos.addRow(1, new Label("Numéro :"), numeroCBField);
+            carteInfos.addRow(2, new Label("Cryptogramme :"), cryptoField);
+            carteInfos.addRow(3, new Label("Expiration :"), expirationPicker);
+
+            paiementBox.getChildren().addAll(carteInfos, modifierCarteButton, enregistrerCarteButton);
+        } else {
+            numeroCBField.setText(u.getNumeroCB());
+            cryptoField.setText(u.getCryptogramme());
+        }
+
+        typeCarteField.setEditable(true);
+        numeroCBField.setEditable(true);
+        cryptoField.setEditable(true);
+        expirationPicker.setDisable(false);
+
+        enregistrerCarteButton.setVisible(true);
+        modifierCarteButton.setDisable(true);
+    }
+
+    private void enregistrerCarte(Utilisateur u) {
+        u.setTypeCarte(typeCarteField.getText());
+        u.setNumeroCB(numeroCBField.getText());
+        u.setCryptogramme(cryptoField.getText());
+        u.setExpiration(expirationPicker.getValue());
+
+        UtilisateurDAO.mettreAJourCarte(u);
+
+        enregistrerCarteButton.setVisible(false);
+        modifierCarteButton.setDisable(false);
+        typeCarteField.setEditable(false);
+        numeroCBField.setEditable(false);
+        cryptoField.setEditable(false);
+        expirationPicker.setDisable(true);
     }
 
     @FXML
@@ -55,14 +181,8 @@ public class MonCompteController {
     @FXML
     public void onValiderClicked() {
         Utilisateur u = Session.getUtilisateur();
-
-        String newEmail = emailField.getText();
-        String newPassword = passwordField.getText();
-
-        // (Optionnel) : ajouter ici des vérifications
-
-        u.setEmail(newEmail);
-        u.setPassword(newPassword);
+        u.setEmail(emailField.getText());
+        u.setPassword(passwordField.getText());
 
         boolean success = UtilisateurDAO.mettreAJourUtilisateur(u);
         if (success) {
@@ -70,15 +190,11 @@ public class MonCompteController {
             passwordField.setEditable(false);
             validerButton.setVisible(false);
             modifierButton.setDisable(false);
-            System.out.println("Profil mis à jour avec succès.");
-        } else {
-            System.out.println("Erreur lors de la mise à jour.");
         }
     }
 
     @FXML
-    public void onDeconnexion() {
-        Session.deconnexion(); // Supprime l'utilisateur actif
+    public void onRetourAccueil() {
         SceneSwitcher.switchScene(
                 (Stage) titreLabel.getScene().getWindow(),
                 "/com/example/projet_java/accueil.fxml",
@@ -86,4 +202,41 @@ public class MonCompteController {
         );
     }
 
+    @FXML
+    public void onDeconnexion() {
+        Session.deconnexion();
+        SceneSwitcher.switchScene(
+                (Stage) titreLabel.getScene().getWindow(),
+                "/com/example/projet_java/accueil.fxml",
+                "Accueil"
+        );
+    }
+
+    @FXML
+    public void onAdminDashboardClicked() {
+        SceneSwitcher.switchScene(
+                (Stage) adminButton.getScene().getWindow(),
+                "/com/example/projet_java/adminbienvenue.fxml",
+                "Tableau de bord Admin"
+        );
+    }
+
+    private void afficherReductions(Utilisateur u) {
+        if (reductionBox == null) return;
+
+        reductionBox.getChildren().clear();
+
+        var liste = ReductionDAO.getReductionsParUtilisateur(u.getIdUser());
+        if (liste.isEmpty()) {
+            Label aucune = new Label("Aucune réduction disponible.");
+            aucune.getStyleClass().add("text-dark");
+            reductionBox.getChildren().add(aucune);
+        } else {
+            for (var red : liste) {
+                Label label = new Label(red.getCode() + " (" + red.getPourcentage() + "%)");
+                label.getStyleClass().add("text-reduction");
+                reductionBox.getChildren().add(label);
+            }
+        }
+    }
 }

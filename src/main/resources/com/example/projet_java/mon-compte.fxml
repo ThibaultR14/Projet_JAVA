@@ -6,41 +6,77 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.JAVAcontroller.MonCompteController"
-            styleClass="root">
+            styleClass="root2">
 
     <top>
         <fx:include source="header.fxml"/>
     </top>
 
     <center>
-        <VBox spacing="25" alignment="CENTER">
-            <padding><Insets top="40" bottom="40" left="50" right="50"/></padding>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    styleClass="main-scroll" style="-fx-background-color: transparent;">
+            <content>
+                <VBox spacing="25" alignment="CENTER">
+                    <padding><Insets top="40" bottom="40" left="50" right="50"/></padding>
 
-            <Label fx:id="titreLabel" styleClass="title-label"/>
+                    <Label fx:id="titreLabel" styleClass="title-label"/>
 
-            <VBox spacing="20" alignment="CENTER_LEFT" styleClass="profil-card">
-                <padding><Insets top="30" bottom="30" left="40" right="40"/></padding>
+                    <VBox spacing="20" alignment="CENTER_LEFT" styleClass="profil-card">
+                        <padding><Insets top="30" bottom="30" left="40" right="40"/></padding>
 
-                <GridPane hgap="20" vgap="15">
+                        <Label text="Mes données :" styleClass="text-s"/>
 
-                    <Label text="Email :" styleClass="text-dark"/>
-                    <TextField fx:id="emailField" styleClass="text-field" GridPane.columnIndex="1" editable="false"/>
+                        <GridPane hgap="20" vgap="15">
 
-                    <Label text="Mot de passe :" styleClass="text-dark" GridPane.rowIndex="1"/>
-                    <PasswordField fx:id="passwordField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
+                            <Label text="Email :" styleClass="text-dark"/>
+                            <TextField fx:id="emailField" styleClass="text-field" GridPane.columnIndex="1" editable="false"/>
 
-                    <Label text="Statut :" styleClass="text-dark" GridPane.rowIndex="2"/>
-                    <Label fx:id="roleLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                </GridPane>
-            </VBox>
+                            <Label text="Mot de passe :" styleClass="text-dark" GridPane.rowIndex="1"/>
+                            <PasswordField fx:id="passwordField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
 
-            <HBox spacing="15" alignment="CENTER">
-                <Button text="Retour à l'accueil" onAction="#onRetourAccueil" styleClass="button-secondary"/>
-                <Button fx:id="modifierButton" text="Modifier" onAction="#onModifierClicked" styleClass="button-primary"/>
-                <Button fx:id="validerButton" text="Enregistrer" onAction="#onValiderClicked" styleClass="button-success" visible="false"/>
-                <Button text="Déconnexion" onAction="#onDeconnexion" styleClass="button-logout"/>
-            </HBox>
-        </VBox>
+                            <Label text="Statut :" styleClass="text-dark" GridPane.rowIndex="2"/>
+                            <Label fx:id="roleLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+
+                        </GridPane>
+                        <HBox spacing="15" >
+
+                            <Button fx:id="adminButton"
+                                    text="Tableau de bord admin"
+                                    styleClass="button-secondary"
+                                    onAction="#onAdminDashboardClicked"
+                                    visible="false"
+                                    managed="false"/>
+
+                        <Button fx:id="modifierButton" text="Modifier" onAction="#onModifierClicked" styleClass="button-primary"/>
+                        <Button fx:id="validerButton" text="Enregistrer" onAction="#onValiderClicked" styleClass="button-success" visible="false"/>
+                        </HBox>
+
+
+                        <Label text="Mes informations de paiment:" styleClass="text-s"/>
+
+                        <VBox fx:id="paiementBox" spacing="10">
+                            <!-- Les éléments (type, numéro masqué, expiration, etc.) sont ajoutés dynamiquement -->
+                            <!-- Le bouton "Supprimer la carte" sera injecté via le contrôleur si une carte est présente -->
+                        </VBox>
+
+
+                        <!-- Réductions -->
+                        <Label text="Mes réductions :" styleClass="text-s"/>
+
+                        <VBox fx:id="reductionBox" spacing="10">
+                            <!-- Les éléments sont ajoutés dynamiquement via le contrôleur -->
+                        </VBox>
+
+                    </VBox>
+
+                    <HBox spacing="15" alignment="CENTER">
+                        <Button text="Retour à l'accueil" onAction="#onRetourAccueil" styleClass="button-secondary"/>
+                        <Button text="Déconnexion" onAction="#onDeconnexion" styleClass="button-logout"/>
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
     </center>
 
     <bottom>

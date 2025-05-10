@@ -1,34 +1,37 @@
 package com.example.JAVAcontroller;
 
-import com.example.JAVAdao.HebergementDAO;
+import com.example.projet_java.SceneSwitcher;
+import com.example.projet_java.Session;
 import com.example.JAVAdao.OptionHebergementDAO;
 import com.example.JAVAdao.TarifDAO;
+import com.example.JAVAdao.VilleDAO;
 import com.example.JAVAmodel.Hebergement;
 import com.example.JAVAmodel.OptionHebergement;
 import com.example.JAVAmodel.Tarif;
+import com.example.JAVAmodel.Ville;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.Priority;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException; // N'oublie pas d'importer IOException
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.io.IOException;  // Nécessaire pour gérer l'IOException lors du chargement des FXML
-import java.util.List;
-
 
 public class FicheHebergementController {
 
     private Hebergement hebergement;
+    private String villeRecherche;
+    private LocalDate dateArriveeRecherche;
+    private LocalDate dateDepartRecherche;
+    private int nbAdultesRecherche;
+    private int nbEnfantsRecherche;
 
     @FXML private Label nomLabel;
     @FXML private Label adresseLabel;
@@ -36,6 +39,7 @@ public class FicheHebergementController {
     @FXML private Label capaciteLabel;
     @FXML private Label tarifLabel;
     @FXML private Label datesLabel;
+    @FXML private Label villeLabel;
     @FXML private VBox optionsContainer;
     @FXML private ImageView photoView;
 
@@ -44,14 +48,29 @@ public class FicheHebergementController {
         chargerInfos();
     }
 
+    public void initRechercheContext(String ville, LocalDate dateArrivee, LocalDate dateDepart, int nbAdultes, int nbEnfants) {
+        this.villeRecherche = ville;
+        this.dateArriveeRecherche = dateArrivee;
+        this.dateDepartRecherche = dateDepart;
+        this.nbAdultesRecherche = nbAdultes;
+        this.nbEnfantsRecherche = nbEnfants;
+    }
+
     private void chargerInfos() {
         if (hebergement == null) return;
 
-        // Infos de base
         nomLabel.setText(hebergement.getNom());
         adresseLabel.setText(hebergement.getAdresse());
         etoilesLabel.setText("★".repeat(hebergement.getNbEtoile()));
         capaciteLabel.setText("Capacité : " + hebergement.getCapaciteMin() + " à " + hebergement.getCapaciteMax() + " pers.");
+
+        // Ville
+        Ville ville = VilleDAO.getVilleById(hebergement.getIdVille());
+        if (ville != null) {
+            villeLabel.setText("Ville : " + ville.getNom() + " (" + ville.getCodePostal() + ")");
+        } else {
+            villeLabel.setText("Ville inconnue");
+        }
 
         // Tarifs
         Tarif tarif = TarifDAO.getTarifById(hebergement.getIdTarif());
@@ -61,18 +80,27 @@ public class FicheHebergementController {
             tarifLabel.setText("Tarifs non disponibles");
         }
 
-        // Dates d'ouverture
+        // Dates
         String ouverture = hebergement.getDateOuverture() != null ? hebergement.getDateOuverture().toString() : "?";
         String fermeture = hebergement.getDateFermeture() != null ? hebergement.getDateFermeture().toString() : "?";
         datesLabel.setText("Ouvert du " + ouverture + " au " + fermeture);
 
         // Image
+        Image image = null;
+        String imagePath = "/images/" + hebergement.getPhoto();
+
         try {
-            Image image = new Image(getClass().getResource("/images/" + hebergement.getPhoto()).toExternalForm());
-            photoView.setImage(image);
+            image = new Image(getClass().getResource(imagePath).toExternalForm());
         } catch (Exception e) {
-            photoView.setImage(new Image(getClass().getResource("/images/default.jpg").toExternalForm()));
+            // Fallback system file
+            File file = new File("src/main/resources/images/" + hebergement.getPhoto());
+            if (file.exists()) {
+                image = new Image(file.toURI().toString());
+            } else {
+                image = new Image(getClass().getResource("/images/default.jpg").toExternalForm());
+            }
         }
+        photoView.setImage(image);
 
         // Options
         optionsContainer.getChildren().clear();
@@ -88,29 +116,47 @@ public class FicheHebergementController {
     public void onRetourRecherche() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet_java/recherche-hebergement.fxml"));
-
-            // Charger la racine de la scène
             Parent root = loader.load();
 
-            // Obtenir le contrôleur de la scène chargée
             RechercheHebergementController controller = loader.getController();
-            controller.initData("", LocalDate.now(), LocalDate.now()); // Remplir avec des valeurs ou des données actuelles
+            controller.initData(villeRecherche, dateArriveeRecherche, dateDepartRecherche, nbAdultesRecherche, nbEnfantsRecherche);
+            controller.setPersonnes(nbAdultesRecherche, nbEnfantsRecherche);
 
-            // Créer la nouvelle scène
-            Scene scene = new Scene(root);
-
-            // Appliquer le CSS à cette scène
-            scene.getStylesheets().add(getClass().getResource("/com/example/projet_java/style.css").toExternalForm());
-
-            // Mettre la scène dans le stage
             Stage stage = (Stage) nomLabel.getScene().getWindow();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
+            stage.getScene().getStylesheets().add(getClass().getResource("/com/example/projet_java/style.css").toExternalForm());
             stage.setTitle("Recherche d'Hébergements");
             stage.show();
-
         } catch (IOException e) {
-            e.printStackTrace();  // Gérer l'exception si l'FXML n'est pas trouvé
+            e.printStackTrace();
         }
     }
 
+    @FXML
+    public void onReserverClicked() {
+        if (Session.getUtilisateur() == null) {
+            SceneSwitcher.switchScene(
+                    (Stage) nomLabel.getScene().getWindow(),
+                    "/com/example/projet_java/connexion.fxml",
+                    "Connexion"
+            );
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet_java/reservation.fxml"));
+            Parent root = loader.load();
+
+            ReservationController controller = loader.getController();
+            controller.setHebergement(hebergement);
+
+            Stage stage = (Stage) nomLabel.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.getScene().getStylesheets().add(getClass().getResource("/com/example/projet_java/style.css").toExternalForm());
+            stage.setTitle("Réserver l'Hébergement");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
