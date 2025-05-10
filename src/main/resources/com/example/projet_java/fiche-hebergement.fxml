@@ -8,14 +8,11 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.FicheHebergementController" styleClass="root2">
 
-    <!-- Header -->
     <top>
         <fx:include source="header.fxml"/>
     </top>
 
-    <!-- Centre avec ScrollPane -->
     <center>
-        <!-- Enveloppe de la VBox dans un ScrollPane -->
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
                     styleClass="main-scroll" style="-fx-background-color: transparent;">
             <content>
@@ -24,12 +21,9 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Conteneur pour centrer la boîte bleue -->
                     <VBox alignment="CENTER" styleClass="card" spacing="25">
-                        <!-- Titre de l'hébergement -->
                         <Label fx:id="nomLabel" styleClass="title-label" alignment="CENTER"/>
 
-                        <!-- Image de l'hébergement -->
                         <HBox alignment="CENTER">
                             <padding>
                                 <Insets top="20" right="20" bottom="20" left="20"/>
@@ -40,9 +34,7 @@
                         <VBox spacing="15" styleClass="options-section">
                             <Label text="Informations" styleClass="section-title"/>
                         </VBox>
-                        <!-- Informations détaillées -->
                         <GridPane hgap="20" vgap="15" styleClass="details-grid">
-                            <!-- Section options -->
 
                             <Label text="Adresse :" styleClass="text-dark" GridPane.halignment="CENTER"/>
                             <Label fx:id="adresseLabel" styleClass="text-dark" GridPane.columnIndex="1" GridPane.halignment="LEFT"/>
@@ -70,7 +62,6 @@
                         <VBox fx:id="optionsContainer" spacing="10" styleClass="options-list"/>
 
 
-                        <!-- Bouton de retour -->
                         <HBox alignment="CENTER" spacing="10">
                             <Button text="Retour à la recherche" onAction="#onRetourRecherche" styleClass="button-primary" maxWidth="200" alignment="CENTER" />
 
@@ -84,7 +75,6 @@
         </ScrollPane>
     </center>
 
-    <!-- Footer -->
     <bottom>
         <fx:include source="footer.fxml"/>
     </bottom>

@@ -46,7 +46,6 @@ public class AccueilController {
                 );
             });
 
-            // 🔹 Bouton Mes Réservations
             Button mesReservationsButton = new Button("Mes Réservations");
             mesReservationsButton.getStyleClass().add("header-button");
 
@@ -61,7 +60,6 @@ public class AccueilController {
                 );
             });
 
-            // 🔹 Bouton Mes Hébergements
             Button mesHebergementsButton = new Button("Mes Hébergements");
             mesHebergementsButton.getStyleClass().add("header-button");
 

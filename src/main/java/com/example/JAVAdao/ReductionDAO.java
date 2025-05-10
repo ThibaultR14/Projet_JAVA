@@ -81,7 +81,6 @@ public class ReductionDAO {
         }
     }
 
-    // ✅ Nouvelle méthode : rechercher une réduction par code
     public static Reduction getReductionByCode(String code) {
         String sql = "SELECT * FROM Reduction WHERE code = ?";
 

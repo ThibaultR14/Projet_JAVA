@@ -25,7 +25,6 @@ public class UtilisateurDAO {
                         rs.getBoolean("isAdmin")
                 );
 
-                // Charger les données de carte bancaire si disponibles
                 u.setTypeCarte(rs.getString("type_carte"));
                 u.setNumeroCB(rs.getString("numero_cb"));
                 u.setCryptogramme(rs.getString("cryptogramme"));

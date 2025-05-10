@@ -14,13 +14,10 @@
                 <Insets top="10" right="15" bottom="10" left="15"/>
             </padding>
 
-            <!-- Logo -->
             <Label text="NotBooking" styleClass="logo-label"/>
 
-            <!-- Espace extensible -->
             <Region HBox.hgrow="ALWAYS"/>
 
-            <!-- HBox pour les boutons connectés -->
             <HBox fx:id="headerBar" spacing="12" alignment="CENTER_RIGHT">
                 <Button text="Connexion"
                         fx:id="connexionButton"
@@ -42,7 +39,6 @@
     </top>
 
 
-    <!-- Centre -->
     <center>
         <VBox spacing="20" alignment="CENTER">
             <padding>
@@ -68,7 +64,6 @@
         </VBox>
     </center>
 
-    <!-- Footer -->
     <bottom>
         <fx:include source="footer.fxml"/>
 

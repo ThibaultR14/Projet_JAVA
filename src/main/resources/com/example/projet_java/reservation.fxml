@@ -26,7 +26,6 @@
                     <Label fx:id="etoilesLabel" styleClass="etoiles-label"/>
 
 
-                    <!-- Bloc Dates -->
                     <VBox spacing="10" styleClass="reservation-section">
                         <Label text="Dates de séjour" styleClass="section-title"/>
                         <HBox spacing="30" alignment="CENTER_LEFT">
@@ -45,7 +44,6 @@
                         </HBox>
                     </VBox>
 
-                    <!-- Bloc Personnes -->
                     <VBox spacing="10" styleClass="reservation-section">
                         <Label text="Nombre de personnes" styleClass="section-title"/>
                         <HBox spacing="30" alignment="CENTER_LEFT">
@@ -64,7 +62,6 @@
                         </HBox>
                     </VBox>
 
-                    <!-- Tarif estimé + promo -->
                     <HBox spacing="20" alignment="CENTER_LEFT">
                         <Label fx:id="tarifEstimeLabel" styleClass="tarif-estime"/>
 
@@ -79,10 +76,8 @@
                     </HBox>
 
 
-                    <!-- Bloc Paiement -->
                     <VBox fx:id="paiementBox" spacing="15" alignment="CENTER_LEFT" styleClass="reservation-section"/>
 
-                    <!-- Formulaire carte -->
                     <VBox fx:id="carteFormBox" spacing="10" alignment="CENTER_LEFT" visible="false" styleClass="reservation-section">
                         <Label text="Ajouter une carte bancaire" styleClass="section-title"/>
                         <TextField fx:id="typeCarteField" promptText="Type de carte (Visa, Mastercard...)"/>
@@ -95,7 +90,6 @@
                                 onAction="#onEnregistrerCarteClicked"/>
                     </VBox>
 
-                    <!-- Boutons -->
                     <HBox spacing="25" alignment="CENTER">
                         <Button text="Retour à la fiche de l'hébergement"
                                 styleClass="button-secondary"

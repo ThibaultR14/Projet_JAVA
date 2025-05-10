@@ -1,5 +1,5 @@
 package com.example.JAVAcontroller;
 
 public class CreditsController {
-    // Pas besoin de logique ici pour l'instant
+    // Vide car on veut juste afficher les credits
 }

@@ -59,11 +59,9 @@ public class MesHebergementsController {
             Label capacite = new Label("Capacité : " + h.getCapaciteMin() + " - " + h.getCapaciteMax());
             Label periode = new Label("Disponible du " + h.getDateOuverture() + " au " + h.getDateFermeture());
 
-            // ✅ Label réservé ou pas
             Label etat = new Label(h.isReserve() ? "🔒 Réservé" : "✅ Disponible");
             etat.setStyle("-fx-font-weight: bold; -fx-text-fill: " + (h.isReserve() ? "#065F46" : "#1E40AF") + ";");
 
-            // ✅ Bouton Supprimer
             Button supprimerBtn = new Button("Supprimer");
             supprimerBtn.getStyleClass().add("button-logout");
             supprimerBtn.setOnAction(e -> {
