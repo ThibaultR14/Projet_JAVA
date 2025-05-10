@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.JAVAcontroller.AdminModifierReservationController"
+            prefWidth="400" prefHeight="400">
+
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+            <TextField fx:id="userField" promptText="Utilisateur"/>
+            <TextField fx:id="hebergementField" promptText="Hébergement"/>
+            <DatePicker fx:id="dateArriveePicker" promptText="Date arrivée"/>
+            <DatePicker fx:id="dateDepartPicker" promptText="Date départ"/>
+            <TextField fx:id="adultesField" promptText="Nb Adultes"/>
+            <TextField fx:id="enfantsField" promptText="Nb Enfants"/>
+            <Button text="Enregistrer" onAction="#enregistrerModification"/>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.JAVAcontroller.AdminBienvenueController"
+>
+
+    <left>
+        <VBox spacing="10.0">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Hébergements" prefWidth="150" onAction="#handleHebergements"/>
+            <Button text="Réservations" prefWidth="150" onAction="#handleReservations"/>
+            <Button text="Offres / Réductions" prefWidth="150" onAction="#handleReduction"/>
+            <Button text="Statistiques" prefWidth="150" onAction="#handleStats"/>
+            <Button text="Déconnexion" fx:id="logoutButton" prefWidth="150" onAction="#handleLogout"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane>
+            <VBox alignment="CENTER" spacing="10.0">
+                <Text text="Bienvenue dans l'espace administrateur" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <Text text="Utilisez le menu de gauche pour gérer les différentes sections de l'application."/>
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>

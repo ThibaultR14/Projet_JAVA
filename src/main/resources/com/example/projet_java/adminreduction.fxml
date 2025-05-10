@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.JAVAcontroller.AdminReductionController">
+
+    <center>
+        <HBox spacing="20">
+            <VBox spacing="10">
+                <Label text="Liste des Réductions" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                <TableView fx:id="tableReductions" prefHeight="400" prefWidth="800">
+                    <columns>
+                        <TableColumn fx:id="colUtilisateur" text="Utilisateur"/>
+                        <TableColumn fx:id="colCode" text="Code"/>
+                        <TableColumn fx:id="colPourcentage" text="Pourcentage"/>
+                        <TableColumn fx:id="colDescription" text="Description"/>
+                        <TableColumn fx:id="colDateDebut" text="Date début"/>
+                        <TableColumn fx:id="colDateFin" text="Date fin"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10">
+                    <TextField fx:id="fieldCode" promptText="Code"/>
+                    <TextField fx:id="fieldPourcentage" promptText="Pourcentage"/>
+                    <TextField fx:id="fieldDescription" promptText="Description"/>
+                </HBox>
+                <HBox spacing="10">
+                    <DatePicker fx:id="pickerDebut" promptText="Date début"/>
+                    <DatePicker fx:id="pickerFin" promptText="Date fin"/>
+                    <TextField fx:id="fieldUserId" promptText="ID Utilisateur"/>
+                </HBox>
+
+                <HBox spacing="10">
+                    <Button text="Retour à l'accueil" onAction="#handleRetourMenu" />
+                    <Button text="Supprimer la réduction sélectionnée" onAction="#handleSupprimerReduction"/>
+                    <Button text="Ajouter la réduction" onAction="#handleAjouterReduction"/>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="10">
+                <Label text="Utilisateurs" style="-fx-font-weight: bold;" />
+                <TableView fx:id="tableUtilisateurs" prefHeight="300" prefWidth="250">
+                    <columns>
+                        <TableColumn fx:id="colUserId" text="ID"/>
+                        <TableColumn fx:id="colUserNom" text="Nom"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.JAVAcontroller.AdminHebergementController">
+
+    <center>
+        <VBox spacing="10.0">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <TableView fx:id="hebergementTable">
+                <columns>
+                    <TableColumn fx:id="nomCol" text="Nom"/>
+                    <TableColumn fx:id="adresseCol" text="Adresse"/>
+                    <TableColumn fx:id="etoilesCol" text="Étoiles"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button fx:id="modifierBtn" text="Modifier" onAction="#modifierHebergement"/>
+                <Button fx:id="supprimerBtn" text="Supprimer" onAction="#supprimerHebergement"/>
+            </HBox>
+            <Button text="Retour à l'accueil" onAction="#retourAccueil"/>
+        </VBox>
+    </center>
+</BorderPane>

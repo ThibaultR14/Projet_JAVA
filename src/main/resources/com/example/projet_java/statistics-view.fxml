@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.JAVAcontroller.AdminStatisticsController">
+
+    <center>
+        <VBox fx:id="chartContainer" spacing="20" style="-fx-padding: 20;">
+            <Label text="Statistiques générales"/>
+        </VBox>
+
+    </center>
+
+
+
+</BorderPane>
