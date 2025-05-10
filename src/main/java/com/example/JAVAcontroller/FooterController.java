@@ -15,13 +15,11 @@ public class FooterController {
 
     @FXML
     public void initialize() {
-        // Définir le curseur en forme de main au survol
         creditsLabel.setCursor(Cursor.HAND);
     }
 
     @FXML
     public void onCreditsClicked(MouseEvent event) {
-        // Redirection vers la page des crédits
         SceneSwitcher.switchScene(
                 (Stage) ((Node) event.getSource()).getScene().getWindow(),
                 "/com/example/projet_java/credits.fxml",

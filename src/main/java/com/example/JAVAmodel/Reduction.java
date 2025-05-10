@@ -11,7 +11,7 @@ public class Reduction {
     private LocalDate dateDebut;
     private LocalDate dateFin;
 
-    // ✅ Constructeurs
+    // Constructeurs
     public Reduction(int idReduction, String code, int pourcentage, LocalDate dateDebut, LocalDate dateFin) {
         this.idReduction = idReduction;
         this.code = code;
@@ -37,7 +37,7 @@ public class Reduction {
         this.dateFin = dateFin;
     }
 
-    // ✅ Getters
+    // Getters
     public int getIdReduction() {
         return idReduction;
     }
@@ -62,7 +62,7 @@ public class Reduction {
         return dateFin;
     }
 
-    // ✅ Setters
+    // Setters
     public void setIdReduction(int idReduction) {
         this.idReduction = idReduction;
     }

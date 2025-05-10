@@ -16,7 +16,7 @@ public class Utilisateur {
     private String cryptogramme;
     private LocalDate expiration;
 
-    // Constructeur pour l'inscription (sans idUser)
+    // Constructeur pour l'inscription
     public Utilisateur(String nom, String prenom, String email, String password, boolean isAdmin) {
         this.nom = nom;
         this.prenom = prenom;
@@ -25,7 +25,7 @@ public class Utilisateur {
         this.isAdmin = isAdmin;
     }
 
-    // Constructeur pour récupération depuis la BDD (avec idUser)
+    // Constructeur pour récupération depuis la BDD
     public Utilisateur(int idUser, String nom, String prenom, String email, String password, boolean isAdmin) {
         this(nom, prenom, email, password, isAdmin);
         this.idUser = idUser;

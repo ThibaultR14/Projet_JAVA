@@ -61,7 +61,6 @@ public class UtilisateurController {
             System.out.println("Erreur : email déjà utilisé ?");
         }
     }
-    // Méthode pour naviguer vers la page d'inscription
     public void goToInscription(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet_java/inscription.fxml"));
@@ -75,7 +74,6 @@ public class UtilisateurController {
         }
     }
 
-    // Méthode pour naviguer vers la page de connexion
     public void goToConnexion(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/projet_java/connexion.fxml"));
@@ -89,7 +87,6 @@ public class UtilisateurController {
         }
     }
 
-    // Méthode pour afficher une alerte
     private void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);

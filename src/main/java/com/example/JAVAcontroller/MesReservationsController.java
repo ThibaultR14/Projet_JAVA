@@ -58,7 +58,6 @@ public class MesReservationsController {
             Label dates = new Label("Du " + r.getDateArrivee() + " au " + r.getDateDepart());
             Label personnes = new Label(r.getNbAdulte() + " adulte(s), " + r.getNbEnfant() + " enfant(s)");
 
-            // 🔴 Bouton Annuler
             Button annulerBtn = new Button("Annuler");
             annulerBtn.getStyleClass().add("button-logout");
             annulerBtn.setOnAction(e -> {

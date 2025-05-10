@@ -7,7 +7,6 @@ import java.util.List;
 
 public class OptionHebergementDAO {
 
-    // Récupère toutes les options pour un hébergement donné
     public static List<OptionHebergement> getOptionsByHebergement(int idHebergement) {
         List<OptionHebergement> options = new ArrayList<>();
         String sql = """

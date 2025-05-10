@@ -9,31 +9,25 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.JAVAcontroller.UtilisateurController" styleClass="root2">
 
-    <!-- Header -->
     <top>
         <fx:include source="header.fxml"/>
     </top>
 
-    <!-- Contenu principal -->
     <center>
         <VBox spacing="15" alignment="CENTER" styleClass="content-container">
             <Label text="Inscription" styleClass="title-label"/>
 
-            <!-- Champs de saisie avec largeur fixe -->
             <TextField fx:id="prenomField" promptText="Prénom" styleClass="text-field" prefWidth="300" maxWidth="300"/>
             <TextField fx:id="nomField" promptText="Nom" styleClass="text-field" prefWidth="300" maxWidth="300"/>
             <TextField fx:id="emailField" promptText="Email" styleClass="text-field" prefWidth="300" maxWidth="300"/>
             <PasswordField fx:id="passwordField" promptText="Mot de passe" styleClass="text-field" prefWidth="300" maxWidth="300"/>
 
-            <!-- Bouton d'inscription -->
             <Button text="S'inscrire" onAction="#onInscription" styleClass="button-primary" prefWidth="250"/>
 
-            <!-- Lien vers la page de connexion -->
             <Hyperlink text="Vous avez déjà un compte ? Connectez-vous" onAction="#goToConnexion" styleClass="text-dark"/>
         </VBox>
     </center>
 
-    <!-- Footer -->
     <bottom>
         <fx:include source="footer.fxml"/>
     </bottom>

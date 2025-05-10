@@ -11,10 +11,8 @@
       alignment="TOP_CENTER"
       styleClass="root2">
 
-    <!-- Header -->
     <fx:include source="header.fxml"/>
 
-    <!-- Scrollable Form -->
     <ScrollPane fx:id="mainScrollPane"
                 fitToWidth="true"
                 pannable="true"
@@ -47,7 +45,6 @@
                         <DatePicker fx:id="dateFermeturePicker" promptText="Date de fermeture" prefWidth="195"/>
                     </HBox>
 
-                    <!-- Drop Zone Image -->
                     <Label text="Photo de l'hebergement" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #1E3A8A; "/>
                     <VBox fx:id="dropZone" alignment="CENTER" spacing="10"
                           style="-fx-border-color: #1b5293; -fx-border-style: dashed; -fx-padding: 20; -fx-border-radius: 8; -fx-background-color: #EFF6FF;">
@@ -72,6 +69,5 @@
         </content>
     </ScrollPane>
 
-    <!-- Footer -->
     <fx:include source="footer.fxml"/>
 </VBox>

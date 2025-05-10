@@ -23,7 +23,7 @@ public class Hebergement {
     public void setIdUser(int idUser) { this.idUser = idUser; }
 
 
-    // ✅ Constructeur complet
+    //Constructeur complet
     public Hebergement(int idHebergement, String nom, String adresse, int nbEtoile, int capaciteMin,
                        int capaciteMax, String photo, int idTarif, int idType, int idVille,
                        LocalDate dateOuverture, LocalDate dateFermeture, boolean reserve) {
@@ -61,7 +61,7 @@ public class Hebergement {
         this.idUser = idUser;
     }
 
-    // ✅ Constructeur sans ID ni champ `reserve` (par défaut à false)
+    // Constructeur sans ID
     public Hebergement(String nom, String adresse, int nbEtoile,
                        int capaciteMin, int capaciteMax,
                        String photo, int idTarif, int idVille,
@@ -79,7 +79,7 @@ public class Hebergement {
         this.reserve = false;  // 🔧 Valeur par défaut
     }
 
-    // ✅ Getters
+    // Getters
     public int getIdHebergement() { return idHebergement; }
     public String getNom() { return nom; }
     public String getAdresse() { return adresse; }
@@ -94,7 +94,7 @@ public class Hebergement {
     public LocalDate getDateFermeture() { return dateFermeture; }
     public boolean isReserve() { return reserve; }
 
-    // ✅ Setters
+    // Setters
     public void setNom(String nom) { this.nom = nom; }
     public void setAdresse(String adresse) { this.adresse = adresse; }
     public void setNbEtoile(int nbEtoile) { this.nbEtoile = nbEtoile; }

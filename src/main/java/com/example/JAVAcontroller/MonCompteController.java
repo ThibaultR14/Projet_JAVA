@@ -49,7 +49,6 @@ public class MonCompteController {
             afficherPaiement(u);
             afficherReductions(u);
 
-            // ✅ Afficher le bouton admin uniquement si isAdmin
             if (u.isAdmin()) {
                 adminButton.setVisible(true);
                 adminButton.setManaged(true);

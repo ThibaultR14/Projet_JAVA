@@ -87,10 +87,28 @@ Assurez-vous d’avoir :
 
 1. Importé le projet dans IntelliJ IDEA ou un autre IDE Java.
 2. Configuré le chemin vers JavaFX dans les options de lancement.
-3. Lancement de la classe `BookingApp`.
+3. Créé une configuration d'exécution (Run Configuration) liée à la classe `BookingApp` :
+    - **Main class** : `com.example.projet_java.BookingApp`
+    - **VM Options** :
+      ```
+      --module-path chemin/vers/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml
+      ```
+      Remplacez `chemin/vers/javafx-sdk/lib` par le chemin réel vers votre SDK JavaFX.
+
+4. Lancez simplement l’application via cette configuration.
+
 
 ---
+## 📈 Améliorations futures
 
+Voici quelques pistes d'évolution possibles du projet NotBooking :
+
+- ✅ **Ajout dynamique de codes de réduction** : permettre à l’admin de créer des codes promos depuis l’interface.
+- 🔍 **Filtres de recherche avancés** : intégrer des filtres comme le prix, les équipements, les avis, la distance, etc.
+- 🌟 **Système d’avis** : autoriser les utilisateurs à laisser une note et un commentaire après leur séjour.
+- 🧾 **Gestion de la validation des réservations** : permettre au propriétaire de valider ou refuser une réservation.
+- 💰 **Portefeuille dynamique** : suivre les paiements, soldes, remboursements ou bonus de fidélité des utilisateurs.
+---
 ## 🙌 Remerciements
 
 Un grand merci à tous les membres de l’équipe pour leur implication, leur rigueur et leur entraide tout au long du développement.

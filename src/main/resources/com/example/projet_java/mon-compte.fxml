@@ -56,16 +56,12 @@
                         <Label text="Mes informations de paiment:" styleClass="text-s"/>
 
                         <VBox fx:id="paiementBox" spacing="10">
-                            <!-- Les éléments (type, numéro masqué, expiration, etc.) sont ajoutés dynamiquement -->
-                            <!-- Le bouton "Supprimer la carte" sera injecté via le contrôleur si une carte est présente -->
                         </VBox>
 
 
-                        <!-- Réductions -->
                         <Label text="Mes réductions :" styleClass="text-s"/>
 
                         <VBox fx:id="reductionBox" spacing="10">
-                            <!-- Les éléments sont ajoutés dynamiquement via le contrôleur -->
                         </VBox>
 
                     </VBox>

@@ -9,28 +9,23 @@
             fx:controller="com.example.JAVAcontroller.MesReservationsController"
             styleClass="root2">
 
-    <!-- Header réutilisable -->
     <top>
         <fx:include source="header.fxml"/>
     </top>
 
-    <!-- Footer réutilisable -->
     <bottom>
         <fx:include source="footer.fxml"/>
     </bottom>
 
-    <!-- Centre -->
     <center>
         <VBox spacing="25" alignment="TOP_CENTER">
             <padding>
                 <Insets top="30" bottom="30" left="40" right="40"/>
             </padding>
 
-            <!-- ✅ Titre principal -->
             <Label text="Mes Réservations"
                    style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1E3A8A;"/>
 
-            <!-- ✅ Conteneur de réservations -->
             <VBox fx:id="reservationsContainer"
                   spacing="15"
                   alignment="TOP_CENTER"

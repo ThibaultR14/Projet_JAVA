@@ -75,7 +75,6 @@ public class RechercheHebergementController {
         int nbEnfants = nbEnfantsSpinner.getValue();
 
         for (Hebergement h : liste) {
-            // ✅ Vérifie que le nombre total de personnes est dans la plage de capacité autorisée
             if (totalPersonnes < h.getCapaciteMin() || totalPersonnes > h.getCapaciteMax()) continue;
 
             Tarif tarif = TarifDAO.getTarifById(h.getIdTarif());
@@ -155,7 +154,6 @@ public class RechercheHebergementController {
             FicheHebergementController controller = loader.getController();
             controller.setHebergement(h);
 
-            // 🔁 On passe le contexte de recherche à la fiche
             controller.initRechercheContext(
                     villeField.getText(),
                     dateArriveePicker.getValue(),
