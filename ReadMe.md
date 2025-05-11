@@ -122,6 +122,7 @@ En cas de problème avec le lancement de l'application ou pour toute question co
 
 - **Thibault Rabbé** – [thibault.rabbe@edu.ece.fr](mailto:thibault.rabbe@edu.ece.fr)
 
+
 > Projet réalisé dans le cadre de notre cursus d'ingénieur.
 
 ---
