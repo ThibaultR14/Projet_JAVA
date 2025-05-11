@@ -102,9 +102,11 @@ public class AjoutHebergementController {
 
             String cheminFinal = "";
             if (selectedImageFile != null) {
-                File destination = new File("src/main/resources/images/" + selectedImageFile.getName());
+                File destination = new File("images-upload/" + selectedImageFile.getName());
+                destination.getParentFile().mkdirs();
                 copyFile(selectedImageFile, destination);
-                cheminFinal = selectedImageFile.getName();
+                cheminFinal = selectedImageFile.getName(); // ou destination.getPath() si besoin
+
             }
 
             int idUser = Session.getUtilisateur().getIdUser();
