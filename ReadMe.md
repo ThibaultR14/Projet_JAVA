@@ -103,7 +103,7 @@ Assurez-vous d’avoir :
 
 Voici quelques pistes d'évolution possibles du projet NotBooking :
 
-- ✅ **Ajout dynamique de codes de réduction** : permettre à l’admin de créer des codes promos depuis l’interface.
+- ✅ **Ajout automatique de codes de réduction** : par rapport à l'ancienneté d'un client ou par une demande.
 - 🔍 **Filtres de recherche avancés** : intégrer des filtres comme le prix, les équipements, les avis, la distance, etc.
 - 🌟 **Système d’avis** : autoriser les utilisateurs à laisser une note et un commentaire après leur séjour.
 - 🧾 **Gestion de la validation des réservations** : permettre au propriétaire de valider ou refuser une réservation.
